@@ -15,7 +15,9 @@ VERSION = os.path.join(os.path.dirname(__file__), "badges/version.png")
 
 
 def format_number(singular, number):
-    return singular % {'value': number}
+    value = singular % {'value': number}
+    # Get rid of the .0 but keep the other decimals
+    return value.replace('.0', '')
 
 
 intword_converters = (
@@ -63,7 +65,10 @@ class BadgeHandler(tornado.web.RequestHandler):
 
     def add_text_to_image(self, bg, downloads):
         font = ImageFont.truetype(FONT, 9)
+        font_ds = ImageFont.truetype(FONT, 9)
         draw = ImageDraw.Draw(bg)
+        draw.text((65, 4), downloads,
+                  (0, 0, 0), font=font_ds)
         draw.text((64, 3), downloads,
                   (255, 255, 255), font=font)
         return bg
@@ -99,8 +104,11 @@ class LatestHandler(tornado.web.RequestHandler):
 
     def add_text_to_image(self, bg, version):
         font = ImageFont.truetype(FONT, 9)
+        font = ImageFont.truetype(FONT, 9)
         draw = ImageDraw.Draw(bg)
-        draw.text((47, 3), version,
+        draw.text((72, 4), version,
+                  (0, 0, 0), font=font)
+        draw.text((71, 3), version,
                   (255, 255, 255), font=font)
         return bg
 
@@ -110,7 +118,7 @@ class LatestHandler(tornado.web.RequestHandler):
         url = URL % package
         version = self.get_version(url)
         img = self.generate_badge(version)
-        imgbuff = cStringIO.StringIO()
+        imgbuff = StringIO.StringIO()
         img.save(imgbuff, "PNG")
         imgbuff.seek(0)
         self.write(imgbuff.read())
