@@ -67,7 +67,7 @@ class BadgeHandler(tornado.web.RequestHandler):
         font = ImageFont.truetype(FONT, 9)
         font_ds = ImageFont.truetype(FONT, 9)
         draw = ImageDraw.Draw(bg)
-        draw.text((65, 4), downloads,
+        draw.text((64, 4), downloads,
                   (0, 0, 0), font=font_ds)
         draw.text((64, 3), downloads,
                   (255, 255, 255), font=font)
@@ -106,7 +106,7 @@ class LatestHandler(tornado.web.RequestHandler):
         font = ImageFont.truetype(FONT, 9)
         font = ImageFont.truetype(FONT, 9)
         draw = ImageDraw.Draw(bg)
-        draw.text((72, 4), version,
+        draw.text((71, 4), version,
                   (0, 0, 0), font=font)
         draw.text((71, 3), version,
                   (255, 255, 255), font=font)
