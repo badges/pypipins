@@ -16,8 +16,8 @@ can always change where the image links to or remove that entire.
 
 You will need to replace **PYPI_PKG_NAME** with your package name.
 
-Total Downloads
----------------
+Downloads
+---------
 
 This shield shows a total of all the downloads of your package from PyPI
 for every version released.
@@ -25,6 +25,18 @@ for every version released.
 .. image:: https://pypip.in/d/blackhole/badge.png
         :target: https://crate.io/packages/blackhole
 
+Query string parameters
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can modify the download shields by appending a query string. Currently you can only modify it in two ways;
+
++-------------------------+---------------------------------------------+------------------------------------------------------------------+
+| Parameter               | Description                                 | Example                                                          |
++=========================+=============================================+==================================================================+
+| ?version=latest         | Show total downloads for the latest version | .. image:: https://pypip.in/d/blackhole/badge.png?version=latest |
++-------------------------+---------------------------------------------+------------------------------------------------------------------+
+| ?version=VERSION_NUMBER | Show downloads for the specified version    | .. image:: https://pypip.in/d/blackhole/badge.png?version=1.5.0  |
++-------------------------+---------------------------------------------+------------------------------------------------------------------+
 
 Image URL
 ~~~~~~~~~
@@ -62,103 +74,6 @@ AsciiDoc
 ::
 
     image:https://pypip.in/d/PYPI_PKG_NAME/badge.png["Downloads", link="https://crate.io/package/PYPI_PGK_NAME"]
-
-
-Downloads for the latest version
---------------------------------
-
-This shield shows total downloads for the latest released version.
-
-.. image:: https://pypip.in/d/blackhole/badge.png?version=latest
-        :target: https://crate.io/packages/blackhole
-
-
-Image URL
-~~~~~~~~~
-::
-
-    https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=latest
-
-RST
-~~~
-::
-
-    .. image:: https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=latest
-            :target: https://crate.io/packages/PYPI_PKG_NAME
-
-Markdown
-~~~~~~~~
-::
-
-    [![Downloads](https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=latest)](https://crate.io/package/PYPI_PGK_NAME)
-
-Textile
-~~~~~~~
-::
-
-    !https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=latest!:https://crate.io/package/PYPI_PGK_NAME
-
-RDOC
-~~~~
-::
-
-    {<img src="https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=latest" alt="Downloads" />}[https://crate.io/package/PYPI_PGK_NAME]
-
-AsciiDoc
-~~~~~~~~
-::
-
-    image:https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=latest["Downloads", link="https://crate.io/package/PYPI_PGK_NAME"]
-
-
-Downloads for a specific version
---------------------------------
-
-This shield shows total downloads for the a specific release.
-
-.. image:: https://pypip.in/d/blackhole/badge.png?version=1.5.0
-        :target: https://crate.io/packages/blackhole
-
-Please note, you will need to replace **VERSION_NUMBER** with the exact version
-as it is displayed in PyPI.
-
-
-Image URL
-~~~~~~~~~
-::
-
-    https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=VERSION_NUMBER
-
-RST
-~~~
-::
-
-    .. image:: https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=VERSION_NUMBER
-            :target: https://crate.io/packages/PYPI_PKG_NAME
-
-Markdown
-~~~~~~~~
-::
-
-    [![Downloads](https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=VERSION_NUMBER)](https://crate.io/package/PYPI_PGK_NAME)
-
-Textile
-~~~~~~~
-::
-
-    !https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=VERSION_NUMBER!:https://crate.io/package/PYPI_PGK_NAME
-
-RDOC
-~~~~
-::
-
-    {<img src="https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=VERSION_NUMBER" alt="Downloads" />}[https://crate.io/package/PYPI_PGK_NAME]
-
-AsciiDoc
-~~~~~~~~
-::
-
-    image:https://pypip.in/d/PYPI_PKG_NAME/badge.png?version=VERSION_NUMBER["Downloads", link="https://crate.io/package/PYPI_PGK_NAME"]
 
 
 Latest release
