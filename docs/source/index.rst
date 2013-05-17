@@ -103,7 +103,7 @@ Markdown
 ~~~~~~~~
 ::
 
-    [![Downloads](https://pypip.in/v/PYPI_PKG_NAME/badge.png)](https://crate.io/package/PYPI_PGK_NAME)
+    [![Latest Version](https://pypip.in/v/PYPI_PKG_NAME/badge.png)](https://crate.io/package/PYPI_PGK_NAME)
 
 Textile
 ~~~~~~~
@@ -115,11 +115,11 @@ RDOC
 ~~~~
 ::
 
-    {<img src="https://pypip.in/v/PYPI_PKG_NAME/badge.png" alt="Downloads" />}[https://crate.io/package/PYPI_PGK_NAME]
+    {<img src="https://pypip.in/v/PYPI_PKG_NAME/badge.png" alt="Latest Version" />}[https://crate.io/package/PYPI_PGK_NAME]
 
 AsciiDoc
 ~~~~~~~~
 ::
 
-    image:https://pypip.in/v/PYPI_PKG_NAME/badge.png["Downloads", link="https://crate.io/package/PYPI_PGK_NAME"]
+    image:https://pypip.in/v/PYPI_PKG_NAME/badge.png["Latest Version", link="https://crate.io/package/PYPI_PGK_NAME"]
 
