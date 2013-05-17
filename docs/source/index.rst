@@ -14,7 +14,9 @@ i.e.
 You'll notice my examples below all use crate.io rather than pypi.python.org, but you
 can always change where the image links to or remove that entire.
 
-You will need to replace **PYPI_PKG_NAME** with your package name.
+You will need to replace **PYPI_PKG_NAME** with your package name and
+**VERSION_NUMBER** with the exact version as it is displayed in PyPI.
+
 
 Downloads
 ---------
@@ -83,10 +85,6 @@ This shield displays the latest version release of your package
 
 .. image:: https://pypip.in/v/blackhole/badge.png
         :target: https://crate.io/packages/blackhole
-
-Please note, you will need to replace **VERSION_NUMBER** with the exact version
-as it is displayed in PyPI.
-
 
 Image URL
 ~~~~~~~~~
