@@ -26,6 +26,7 @@ for every version released.
 
 .. image:: https://pypip.in/d/blackhole/badge.png
         :target: https://crate.io/packages/blackhole
+        :alt: Downloads
 
 Query string parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,6 +53,7 @@ RST
 
     .. image:: https://pypip.in/d/PYPI_PKG_NAME/badge.png
             :target: https://crate.io/packages/PYPI_PKG_NAME
+            :alt: Downloads
 
 Markdown
 ~~~~~~~~
@@ -85,6 +87,7 @@ This shield displays the latest version release of your package
 
 .. image:: https://pypip.in/v/blackhole/badge.png
         :target: https://crate.io/packages/blackhole
+        :alt: Latest Version
 
 Image URL
 ~~~~~~~~~
@@ -98,6 +101,7 @@ RST
 
     .. image:: https://pypip.in/v/PYPI_PKG_NAME/badge.png
             :target: https://crate.io/packages/PYPI_PKG_NAME
+            :alt: Latest Version
 
 Markdown
 ~~~~~~~~
