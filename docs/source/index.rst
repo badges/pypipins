@@ -14,7 +14,9 @@ i.e.
 You'll notice my examples below all use crate.io rather than pypi.python.org, but you
 can always change where the image links to or remove that entire.
 
-You will need to replace **PYPI_PKG_NAME** with your package name.
+You will need to replace **PYPI_PKG_NAME** with your package name and
+**VERSION_NUMBER** with the exact version as it is displayed in PyPI.
+
 
 Downloads
 ---------
@@ -23,7 +25,8 @@ This shield shows a total of all the downloads of your package from PyPI
 for every version released.
 
 .. image:: https://pypip.in/d/blackhole/badge.png
-        :target: https://crate.io/packages/blackhole
+    :target: https://crate.io/packages/blackhole
+    :alt: Downloads
 
 Query string parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,7 +52,8 @@ RST
 ::
 
     .. image:: https://pypip.in/d/PYPI_PKG_NAME/badge.png
-            :target: https://crate.io/packages/PYPI_PKG_NAME
+        :target: https://crate.io/packages/PYPI_PKG_NAME
+        :alt: Downloads
 
 Markdown
 ~~~~~~~~
@@ -82,11 +86,8 @@ Latest release
 This shield displays the latest version release of your package
 
 .. image:: https://pypip.in/v/blackhole/badge.png
-        :target: https://crate.io/packages/blackhole
-
-Please note, you will need to replace **VERSION_NUMBER** with the exact version
-as it is displayed in PyPI.
-
+    :target: https://crate.io/packages/blackhole
+    :alt: Latest Version
 
 Image URL
 ~~~~~~~~~
@@ -99,13 +100,14 @@ RST
 ::
 
     .. image:: https://pypip.in/v/PYPI_PKG_NAME/badge.png
-            :target: https://crate.io/packages/PYPI_PKG_NAME
+        :target: https://crate.io/packages/PYPI_PKG_NAME
+        :alt: Latest Version
 
 Markdown
 ~~~~~~~~
 ::
 
-    [![Downloads](https://pypip.in/v/PYPI_PKG_NAME/badge.png)](https://crate.io/package/PYPI_PGK_NAME)
+    [![Latest Version](https://pypip.in/v/PYPI_PKG_NAME/badge.png)](https://crate.io/package/PYPI_PGK_NAME)
 
 Textile
 ~~~~~~~
@@ -117,11 +119,11 @@ RDOC
 ~~~~
 ::
 
-    {<img src="https://pypip.in/v/PYPI_PKG_NAME/badge.png" alt="Downloads" />}[https://crate.io/package/PYPI_PGK_NAME]
+    {<img src="https://pypip.in/v/PYPI_PKG_NAME/badge.png" alt="Latest Version" />}[https://crate.io/package/PYPI_PGK_NAME]
 
 AsciiDoc
 ~~~~~~~~
 ::
 
-    image:https://pypip.in/v/PYPI_PKG_NAME/badge.png["Downloads", link="https://crate.io/package/PYPI_PGK_NAME"]
+    image:https://pypip.in/v/PYPI_PKG_NAME/badge.png["Latest Version", link="https://crate.io/package/PYPI_PGK_NAME"]
 
