@@ -14,7 +14,7 @@ setup(
     zip_safe=False,
     keywords='PyPI crate.io badges pins',
     install_requires=[
-        'BeautifulSoup',
+        'beautifulsoup4',
         'Pillow',
         'requests',
         'tornado',

@@ -4,7 +4,12 @@ import StringIO
 import tornado.ioloop
 import tornado.web
 import requests
-from BeautifulSoup import BeautifulSoup
+try:
+    # BeautifulSoup 4
+    from BeautifulSoup import BeautifulSoup
+except ImportError:
+    # BeautifulSoup 3
+    from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
 
