@@ -1,5 +1,10 @@
 import os
-import StringIO
+try:
+    # Python 2
+    from StringIO import StringIO as BytesIO
+except ImportError:
+    # Python 3
+    from io import BytesIO
 
 import tornado.ioloop
 import tornado.web
@@ -84,7 +89,7 @@ class BadgeHandler(tornado.web.RequestHandler):
         url = URL % package
         downloads = self.intword(self.get_downloads(url, version))
         img = self.generate_badge(downloads)
-        imgbuff = StringIO.StringIO()
+        imgbuff = BytesIO()
         img.save(imgbuff, "PNG")
         imgbuff.seek(0)
         self.write(imgbuff.read())
@@ -123,7 +128,7 @@ class LatestHandler(tornado.web.RequestHandler):
         url = URL % package
         version = self.get_version(url)
         img = self.generate_badge(version)
-        imgbuff = StringIO.StringIO()
+        imgbuff = BytesIO()
         img.save(imgbuff, "PNG")
         imgbuff.seek(0)
         self.write(imgbuff.read())
