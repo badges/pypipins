@@ -1,10 +1,20 @@
 import os
-import StringIO
+try:
+    # Python 2
+    from StringIO import StringIO as BytesIO
+except ImportError:
+    # Python 3
+    from io import BytesIO
 
 import tornado.ioloop
 import tornado.web
 import requests
-from BeautifulSoup import BeautifulSoup
+try:
+    # BeautifulSoup 4
+    from BeautifulSoup import BeautifulSoup
+except ImportError:
+    # BeautifulSoup 3
+    from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -79,7 +89,7 @@ class BadgeHandler(tornado.web.RequestHandler):
         url = URL % package
         downloads = self.intword(self.get_downloads(url, version))
         img = self.generate_badge(downloads)
-        imgbuff = StringIO.StringIO()
+        imgbuff = BytesIO()
         img.save(imgbuff, "PNG")
         imgbuff.seek(0)
         self.write(imgbuff.read())
@@ -118,7 +128,7 @@ class LatestHandler(tornado.web.RequestHandler):
         url = URL % package
         version = self.get_version(url)
         img = self.generate_badge(version)
-        imgbuff = StringIO.StringIO()
+        imgbuff = BytesIO()
         img.save(imgbuff, "PNG")
         imgbuff.seek(0)
         self.write(imgbuff.read())
@@ -131,4 +141,5 @@ application = tornado.web.Application([
 
 if __name__ == "__main__":
     application.listen(8888)
+    print("Starting tornado server on port 8888...")
     tornado.ioloop.IOLoop.instance().start()
