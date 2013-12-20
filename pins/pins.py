@@ -6,19 +6,14 @@ except ImportError:
     # Python 3
     from io import BytesIO
 
+import simplejson as json
 import tornado.ioloop
 import tornado.web
 import requests
-try:
-    # BeautifulSoup 4
-    from BeautifulSoup import BeautifulSoup
-except ImportError:
-    # BeautifulSoup 3
-    from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
 
-URL = "https://crate.io/packages/%s/"
+URL = "https://pypi.python.org/pypi/%s/json"
 FONT = os.path.join(os.path.dirname(__file__), "fonts/OpenSans-Regular.ttf")
 DOWNLOADS = os.path.join(os.path.dirname(__file__), "badges/downloads.png")
 VERSION = os.path.join(os.path.dirname(__file__), "badges/version.png")
@@ -55,18 +50,16 @@ class BadgeHandler(tornado.web.RequestHandler):
                 new_value = value / float(large_number)
                 return converters(new_value)
 
-    def get_downloads(self, url, version):
-        if version is not None and version != "latest":
-            url += version
+    def get_downloads(self, url, period):
+        if period not in ('day', 'week', 'month'):
+            period = month
         try:
             r = requests.get(url)
             r.raise_for_status()
         except requests.exceptions.HTTPError:
             return "error"
-        soup = BeautifulSoup(r.content)
-        count = soup.findAll('span', {'class': 'count'})
-        count = count[1] if version is not None else count[0]
-        return int(count.text.replace(',', ''))
+        j = json.loads(r.content)
+        return j['info']['downloads']['last_{}'.format(period)]
 
     def generate_badge(self, downloads):
         bg = Image.open(DOWNLOADS)
@@ -85,9 +78,9 @@ class BadgeHandler(tornado.web.RequestHandler):
 
     def get(self, package):
         self.set_header("Content-Type", "image/png")
-        version = self.get_argument('version', None)
+        period = self.get_argument('period', 'month')
         url = URL % package
-        downloads = self.intword(self.get_downloads(url, version))
+        downloads = self.intword(self.get_downloads(url, period))
         img = self.generate_badge(downloads)
         imgbuff = BytesIO()
         img.save(imgbuff, "PNG")
@@ -103,9 +96,8 @@ class LatestHandler(tornado.web.RequestHandler):
             r.raise_for_status()
         except requests.exceptions.HTTPError:
             return "error"
-        soup = BeautifulSoup(r.content)
-        version = soup.find('small')
-        return version.text
+        j = json.loads(r.content)
+        return j['info']['version']
 
     def generate_badge(self, version):
         bg = Image.open(VERSION)
