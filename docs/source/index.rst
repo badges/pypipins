@@ -19,8 +19,8 @@ You will need to replace **PYPI_PKG_NAME** with your package name.
 Downloads
 ---------
 
-This shield shows a total of all the downloads of your package from PyPI
-for every version released.
+This shield shows your package downloads, it defaults to use total this month but can
+show today, this week or this month.
 
 .. image:: https://pypip.in/d/blackhole/badge.png
     :target: https://pypi.python.org/pypi/blackhole/
@@ -31,11 +31,11 @@ Query string parameters
 
 You can modify the download shields by appending a query string. Currently you can only modify it in two ways;
 
-+--------------------------------+---------------------------------------------+--------------------------------------------------------------+
-| Parameter                      | Description                                 | Example                                                      |
-+================================+=============================================+==============================================================+
-| ?period=day|week|month         | Show total downloads for the latest version | .. image:: https://pypip.in/d/blackhole/badge.png?period=day |
-+--------------------------------+---------------------------------------------+--------------------------------------------------------------+
++--------------------------------+---------------------------------------------+----------------------------------------------------------------+
+| Parameter                      | Description                                 | Example                                                        |
++================================+=============================================+================================================================+
+| ?period=day|week|month         | Show total downloads for the latest version | .. image:: https://pypip.in/d/blackhole/badge.png?period=month |
++--------------------------------+---------------------------------------------+----------------------------------------------------------------+
 
 Sadly, with the changes to PyPI and crate.io being discontinued, the ability to count downloads for specific versions and for an entire total
 has had to be removed. Sorry.
