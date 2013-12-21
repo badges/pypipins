@@ -30,7 +30,7 @@ intword_converters = (
 )
 
 
-class BadgeHandler(tornado.web.RequestHandler):
+class DownloadHandler(tornado.web.RequestHandler):
 
     # Pretty much taken straight from Django
     def intword(self, value):
@@ -57,7 +57,7 @@ class BadgeHandler(tornado.web.RequestHandler):
         except requests.exceptions.HTTPError:
             return "error"
         j = json.loads(r.content)
-        return j['info']['downloads']['last_{}'.format(period)]
+        return j['info']['downloads']['last_{0}'.format(period)]
 
     def generate_badge(self, downloads):
         bg = Image.open(DOWNLOADS)
@@ -78,9 +78,9 @@ class BadgeHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "image/png")
         period = self.get_argument('period', 'month')
         url = PYPI_URL % package
-        downloads = self.intword(self.get_downloads(url, period, 'green'))
+        downloads = self.intword(self.get_downloads(url, period))
         pperiod = "%s / %s" % (downloads, period)
-        shield_url = SHIELD_URL % ("downloads", pperiod)
+        shield_url = SHIELD_URL % ("downloads", pperiod, 'green')
         shield = requests.get(shield_url).content
         img = BytesIO(shield)
         img.seek(0)
@@ -139,7 +139,7 @@ class WheelHandler(tornado.web.RequestHandler):
 
 
 application = tornado.web.Application([
-    (r"^/d/(.*?)/badge.png", BadgeHandler),
+    (r"^/d/(.*?)/badge.png", DownloadHandler),
     (r"^/v/(.*?)/badge.png", LatestHandler),
     (r"^/wheel/(.*?)/badge.png", WheelHandler),
 ])
