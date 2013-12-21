@@ -126,3 +126,52 @@ AsciiDoc
 
     image:https://pypip.in/v/PYPI_PKG_NAME/badge.png["Latest Version", link="https://pypi.python.org/pypi/PYPI_PKG_NAME/"]
 
+
+
+Wheel
+-----
+
+This shield displays whether your package has a wheel version available.
+
+.. image:: https://pypip.in/wheel/blackhole/badge.png
+    :target: https://pypi.python.org/pypi/blackhole/
+    :alt: Wheel Available
+
+Image URL
+~~~~~~~~~
+::
+
+    https://pypip.in/wheel/PYPI_PKG_NAME/badge.png
+
+RST
+~~~
+::
+
+    .. image:: https://pypip.in/wheel/PYPI_PKG_NAME/badge.png
+        :target: https://pypi.python.org/pypi/PYPI_PKG_NAME/
+        :alt: Wheel Available
+
+Markdown
+~~~~~~~~
+::
+
+    [![Wheel Available](https://pypip.in/wheel/PYPI_PKG_NAME/badge.png)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
+
+Textile
+~~~~~~~
+::
+
+    !https://pypip.in/wheel/PYPI_PKG_NAME/badge.png!:https://pypi.python.org/pypi/PYPI_PKG_NAME/
+
+RDOC
+~~~~
+::
+
+    {<img src="https://pypip.in/wheel/PYPI_PKG_NAME/badge.png" alt="Wheel Available" />}[https://pypi.python.org/pypi/PYPI_PKG_NAME/]
+
+AsciiDoc
+~~~~~~~~
+::
+
+    image:https://pypip.in/wheel/PYPI_PKG_NAME/badge.png["Wheel Available", link="https://pypi.python.org/pypi/PYPI_PKG_NAME/"]
+
