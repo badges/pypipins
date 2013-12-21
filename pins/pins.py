@@ -10,13 +10,11 @@ import simplejson as json
 import tornado.ioloop
 import tornado.web
 import requests
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
 
-URL = "https://pypi.python.org/pypi/%s/json"
-FONT = os.path.join(os.path.dirname(__file__), "fonts/OpenSans-Regular.ttf")
-DOWNLOADS = os.path.join(os.path.dirname(__file__), "badges/downloads.png")
-VERSION = os.path.join(os.path.dirname(__file__), "badges/version.png")
+PYPI_URL = "https://pypi.python.org/pypi/%s/json"
+SHIELD_URL = "http://img.shields.io/%s/%s.png?color=%s"
 
 
 def format_number(singular, number):
@@ -79,13 +77,14 @@ class BadgeHandler(tornado.web.RequestHandler):
     def get(self, package):
         self.set_header("Content-Type", "image/png")
         period = self.get_argument('period', 'month')
-        url = URL % package
-        downloads = self.intword(self.get_downloads(url, period))
-        img = self.generate_badge(downloads)
-        imgbuff = BytesIO()
-        img.save(imgbuff, "PNG")
-        imgbuff.seek(0)
-        self.write(imgbuff.read())
+        url = PYPI_URL % package
+        downloads = self.intword(self.get_downloads(url, period, 'green'))
+        pperiod = "%s / %s" % (downloads, period)
+        shield_url = SHIELD_URL % ("downloads", pperiod)
+        shield = requests.get(shield_url).content
+        img = BytesIO(shield)
+        img.seek(0)
+        self.write(img.read())
 
 
 class LatestHandler(tornado.web.RequestHandler):
@@ -99,36 +98,50 @@ class LatestHandler(tornado.web.RequestHandler):
         j = json.loads(r.content)
         return j['info']['version']
 
-    def generate_badge(self, version):
-        bg = Image.open(VERSION)
-        bg = self.add_text_to_image(bg, version)
-        return bg
+    def get(self, package):
+        self.set_header("Content-Type", "image/png")
+        url = PYPI_URL % package
+        version = self.get_version(url)
+        shield_url = SHIELD_URL % ("version", version, 'green')
+        shield = requests.get(shield_url).content
+        img = BytesIO(shield)
+        img.seek(0)
+        self.write(img.read())
 
-    def add_text_to_image(self, bg, version):
-        font = ImageFont.truetype(FONT, 9)
-        font = ImageFont.truetype(FONT, 9)
-        draw = ImageDraw.Draw(bg)
-        draw.text((71, 4), version,
-                  (0, 0, 0), font=font)
-        draw.text((71, 3), version,
-                  (255, 255, 255), font=font)
-        return bg
+
+class WheelHandler(tornado.web.RequestHandler):
+
+    def get_wheel(self, url):
+        try:
+            r = requests.get(url)
+            r.raise_for_status()
+        except requests.exceptions.HTTPError:
+            return "error"
+        j = json.loads(r.content)
+        urls = j['urls']
+        if len(urls) > 0:
+            for u in urls:
+                if u['packagetype'] == 'bdist_wheel':
+                    return True
+        return False
 
     def get(self, package):
         self.set_header("Content-Type", "image/png")
-        version = self.get_argument('version', None)
-        url = URL % package
-        version = self.get_version(url)
-        img = self.generate_badge(version)
-        imgbuff = BytesIO()
-        img.save(imgbuff, "PNG")
-        imgbuff.seek(0)
-        self.write(imgbuff.read())
+        url = PYPI_URL % package
+        has_wheel = self.get_wheel(url)
+        wheel_text = "yes" if has_wheel else "no"
+        colour = "green" if has_wheel else "red"
+        shield_url = SHIELD_URL % ("wheel", wheel_text, colour)
+        shield = requests.get(shield_url).content
+        img = BytesIO(shield)
+        img.seek(0)
+        self.write(img.read())
 
 
 application = tornado.web.Application([
     (r"^/d/(.*?)/badge.png", BadgeHandler),
     (r"^/v/(.*?)/badge.png", LatestHandler),
+    (r"^/wheel/(.*?)/badge.png", WheelHandler),
 ])
 
 if __name__ == "__main__":
