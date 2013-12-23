@@ -14,7 +14,7 @@ from PIL import Image
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
-SHIELD_URL = "http://img.shields.io/%s/%s.png?color=%s"
+SHIELD_URL = "http://b.repl.ca/%s-%s-%s.png"
 
 
 def format_number(singular, number):
@@ -80,7 +80,7 @@ class DownloadHandler(tornado.web.RequestHandler):
         url = PYPI_URL % package
         downloads = self.intword(self.get_downloads(url, period))
         pperiod = "%s / %s" % (downloads, period)
-        shield_url = SHIELD_URL % ("downloads", pperiod, 'green')
+        shield_url = SHIELD_URL % ("downloads", pperiod, 'brightgreen')
         shield = requests.get(shield_url).content
         img = BytesIO(shield)
         img.seek(0)
@@ -102,7 +102,7 @@ class LatestHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "image/png")
         url = PYPI_URL % package
         version = self.get_version(url)
-        shield_url = SHIELD_URL % ("version", version, 'green')
+        shield_url = SHIELD_URL % ("version", version, 'brightgreen')
         shield = requests.get(shield_url).content
         img = BytesIO(shield)
         img.seek(0)
