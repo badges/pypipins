@@ -14,7 +14,7 @@ from PIL import Image
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
-SHIELD_URL = "http://b.repl.ca/%s-%s-%s.png"
+SHIELD_URL = "http://b.repl.ca/v1/%s-%s-%s.png"
 
 
 def format_number(singular, number):
@@ -160,6 +160,7 @@ class LicenseHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "image/png")
         url = PYPI_URL % package
         license = self.get_license(url)
+        license = license.replace(' ', '_')
         shield_url = SHIELD_URL % ("license", license, "blue")
         shield = requests.get(shield_url).content
         img = BytesIO(shield)
