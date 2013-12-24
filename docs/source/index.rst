@@ -3,7 +3,8 @@ PyPI Shields/Pins
 =================
 
 PyPI Shields/Pins are shields for you GitHub repo, documentation or website that show
-your many times your project has been downloaded from PyPI or it's latest version.
+how many your many times your project has been downloaded, it's latest version, whether
+you provide egg and wheel versions and what license your project is released under.
 
 Please note, due to how PyPI works, you'll need to use the exact name of your PyPI package
 i.e.
