@@ -2,6 +2,27 @@
 PyPI Shields/Pins
 =================
 
+.. image:: https://api.travis-ci.org/kura/blackhole.png?branch=master
+        :target: https://travis-ci.org/kura/blackhole
+
+.. image:: https://coveralls.io/repos/kura/blackhole/badge.png?branch=master
+        :target: https://coveralls.io/r/kura/blackhole
+
+.. image:: https://pypip.in/d/blackhole/badge.png
+        :target: https://pypi.python.org/pypi/blackhole/
+
+.. image:: https://pypip.in/v/blackhole/badge.png
+        :target: https://pypi.python.org/pypi/blackhole/
+
+.. image:: https://pypip.in/egg/blackhole/badge.png
+        :target: https://pypi.python.org/pypi/blackhole/
+
+.. image:: https://pypip.in/wheel/blackhole/badge.png
+        :target: https://pypi.python.org/pypi/blackhole/
+
+.. image:: https://pypip.in/license/blackhole/badge.png
+        :target: https://pypi.python.org/pypi/blackhole/
+
 PyPI Shields/Pins are shields for you GitHub repo, documentation or website that show
 how many your many times your project has been downloaded, it's latest version, whether
 you provide egg and wheel versions and what license your project is released under.
