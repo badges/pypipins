@@ -2,12 +2,6 @@
 PyPI Shields/Pins
 =================
 
-.. image:: https://api.travis-ci.org/kura/blackhole.png?branch=master
-        :target: https://travis-ci.org/kura/blackhole
-
-.. image:: https://coveralls.io/repos/kura/blackhole/badge.png?branch=master
-        :target: https://coveralls.io/r/kura/blackhole
-
 .. image:: https://pypip.in/d/blackhole/badge.png
         :target: https://pypi.python.org/pypi/blackhole/
 
