@@ -152,8 +152,10 @@ class LicenseHandler(tornado.web.RequestHandler):
         if len(classifiers) > 0:
             for l in classifiers:
                 if l.startswith("License"):
-                    _, _, license = l.split(" :: ")
-                    return license
+                    bits = l.split(" :: ")
+                    if len(bits) == 3:
+                        return bits[2]
+                    return bits[1]
         return "unknown"
 
     def get(self, package):

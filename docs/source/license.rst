@@ -6,11 +6,7 @@ License
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: License
 
-This shield displays your project's license name, it uses the::
-
-    License :: OSI Approved :: MIT License
-
-classifier.
+This shield displays your project's license name, it uses the `'License ::' classifier from PyPI <https://pypi.python.org/pypi?%3Aaction=list_classifiers>`_.
 
 Image URL
 ~~~~~~~~~
