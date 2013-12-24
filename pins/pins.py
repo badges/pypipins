@@ -139,10 +139,39 @@ class WheelHandler(tornado.web.RequestHandler):
         self.write(img.read())
 
 
+class LicenseHandler(tornado.web.RequestHandler):
+
+    def get_license(self, url):
+        try:
+            r = requests.get(url)
+            r.raise_for_status()
+        except requests.exceptions.HTTPError:
+            return "error"
+        j = json.loads(r.content)
+        classifiers = j['info']['classifiers']
+        if len(classifiers) > 0:
+            for l in classifiers:
+                if l.startswith("License"):
+                    _, _, license = l.split(" :: ")
+                    return license
+        return "unknown"
+
+    def get(self, package):
+        self.set_header("Content-Type", "image/png")
+        url = PYPI_URL % package
+        license = self.get_license(url)
+        shield_url = SHIELD_URL % ("license", license, "blue")
+        shield = requests.get(shield_url).content
+        img = BytesIO(shield)
+        img.seek(0)
+        self.write(img.read())
+
+
 application = tornado.web.Application([
     (r"^/d/(.*?)/badge.png", DownloadHandler),
     (r"^/v/(.*?)/badge.png", LatestHandler),
     (r"^/wheel/(.*?)/badge.png", WheelHandler),
+    (r"^/license/(.*?)/badge.png", LicenseHandler),
 ])
 
 if __name__ == "__main__":
