@@ -22,6 +22,7 @@ Shields & Usage
     downloads
     version
     wheel
+    egg
     license
 
 Thanks

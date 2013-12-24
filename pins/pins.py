@@ -139,6 +139,35 @@ class WheelHandler(tornado.web.RequestHandler):
         self.write(img.read())
 
 
+class EggHandler(tornado.web.RequestHandler):
+
+    def get_egg(self, url):
+        try:
+            r = requests.get(url)
+            r.raise_for_status()
+        except requests.exceptions.HTTPError:
+            return "error"
+        j = json.loads(r.content)
+        urls = j['urls']
+        if len(urls) > 0:
+            for u in urls:
+                if u['packagetype'] == 'bdist_egg':
+                    return True
+        return False
+
+    def get(self, package):
+        self.set_header("Content-Type", "image/png")
+        url = PYPI_URL % package
+        has_egg = self.get_egg(url)
+        egg_text = "yes" if has_egg else "no"
+        colour = "green" if has_egg else "red"
+        shield_url = SHIELD_URL % ("egg", egg_text, colour)
+        shield = requests.get(shield_url).content
+        img = BytesIO(shield)
+        img.seek(0)
+        self.write(img.read())
+
+
 class LicenseHandler(tornado.web.RequestHandler):
 
     def get_license(self, url):
@@ -174,6 +203,7 @@ application = tornado.web.Application([
     (r"^/d/(.*?)/badge.png", DownloadHandler),
     (r"^/v/(.*?)/badge.png", LatestHandler),
     (r"^/wheel/(.*?)/badge.png", WheelHandler),
+    (r"^/egg/(.*?)/badge.png", EggHandler),
     (r"^/license/(.*?)/badge.png", LicenseHandler),
 ])
 
