@@ -11,9 +11,6 @@ i.e.
 - Sphinx not sphinx
 - Django not django
 
-You'll notice my examples below all use crate.io rather than pypi.python.org, but you
-can always change where the image links to or remove that entire.
-
 You will need to replace **PYPI_PKG_NAME** with your package name.
 
 Shields & Usage
