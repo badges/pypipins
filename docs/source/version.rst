@@ -2,7 +2,7 @@
 Latest release
 ==============
 
-This shield displays the latest version release of your package
+This shield displays the latest version release of your package.
 
 .. image:: https://pypip.in/v/blackhole/badge.png
     :target: https://pypi.python.org/pypi/blackhole/

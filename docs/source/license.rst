@@ -2,15 +2,15 @@
 License
 =======
 
+.. image:: https://pypip.in/license/blackhole/badge.png
+    :target: https://pypi.python.org/pypi/blackhole/
+    :alt: License
+
 This shield displays your project's license name, it uses the::
 
     License :: OSI Approved :: MIT License
 
 classifier.
-
-.. image:: https://pypip.in/license/blackhole/badge.png
-    :target: https://pypi.python.org/pypi/blackhole/
-    :alt: License
 
 Image URL
 ~~~~~~~~~
