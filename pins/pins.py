@@ -79,7 +79,8 @@ class DownloadHandler(tornado.web.RequestHandler):
         period = self.get_argument('period', 'month')
         url = PYPI_URL % package
         downloads = self.intword(self.get_downloads(url, period))
-        pperiod = "%s / %s" % (downloads, period)
+        period = "this_%s" % period if period in ('week', 'month') else "today"
+        pperiod = "%s_%s" % (downloads, period)
         shield_url = SHIELD_URL % ("downloads", pperiod, 'brightgreen')
         shield = requests.get(shield_url).content
         img = BytesIO(shield)
