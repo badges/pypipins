@@ -185,7 +185,7 @@ class LicenseHandler(tornado.web.RequestHandler):
                     if len(bits) == 3:
                         return bits[2]
                     return bits[1]
-        return "unknown"
+        return j['info'].get('license') or "unknown"
 
     def get(self, package):
         self.set_header("Content-Type", "image/png")
