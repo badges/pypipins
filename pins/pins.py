@@ -14,7 +14,7 @@ from PIL import Image
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
-SHIELD_URL = "http://b.repl.ca/v1/%s-%s-%s.png"
+SHIELD_URL = "http://localhost:9000/v1/%s-%s-%s.png"
 
 
 def format_number(singular, number):
@@ -160,7 +160,7 @@ class EggHandler(tornado.web.RequestHandler):
         url = PYPI_URL % package
         has_egg = self.get_egg(url)
         egg_text = "yes" if has_egg else "no"
-        colour = "green" if has_egg else "red"
+        colour = "red" if has_egg else "brightgreen"
         shield_url = SHIELD_URL % ("egg", egg_text, colour)
         shield = requests.get(shield_url).content
         img = BytesIO(shield)
