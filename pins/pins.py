@@ -177,6 +177,11 @@ class LicenseHandler(tornado.web.RequestHandler):
         except requests.exceptions.HTTPError:
             return "error"
         j = json.loads(r.content)
+        license = j['info'].get('license')
+        # Use the license unless someone blobbed the whole license text in
+        # this field. In this case fallback on classifers.
+        if license and '\n' not in license:
+            return license
         classifiers = j['info']['classifiers']
         if len(classifiers) > 0:
             for l in classifiers:
@@ -185,7 +190,7 @@ class LicenseHandler(tornado.web.RequestHandler):
                     if len(bits) == 3:
                         return bits[2]
                     return bits[1]
-        return j['info'].get('license') or "unknown"
+        return "unknown"
 
     def get(self, package):
         self.set_header("Content-Type", "image/png")
