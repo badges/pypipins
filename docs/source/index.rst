@@ -14,6 +14,9 @@ PyPI Shields/Pins
 .. image:: https://pypip.in/wheel/blackhole/badge.png
         :target: https://pypi.python.org/pypi/blackhole/
 
+.. image:: https://pypip.in/format/blackhole/badge.png
+        :target: https://pypi.python.org/pypi/blackhole/
+
 .. image:: https://pypip.in/license/blackhole/badge.png
         :target: https://pypi.python.org/pypi/blackhole/
 
@@ -39,6 +42,7 @@ Shields & Usage
     version
     wheel
     egg
+    format
     license
 
 Thanks
