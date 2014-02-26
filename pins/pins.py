@@ -176,15 +176,15 @@ class LicenseHandler(tornado.web.RequestHandler):
             r.raise_for_status()
         except requests.exceptions.HTTPError:
             return "error"
-        j = json.loads(r.content)
-        classifiers = j['info']['classifiers']
-        if len(classifiers) > 0:
-            for l in classifiers:
-                if l.startswith("License"):
-                    bits = l.split(" :: ")
-                    if len(bits) == 3:
-                        return bits[2]
-                    return bits[1]
+        info = json.loads(r.content)['info']
+        license = info.get('license')
+        # Use the license unless someone blobbed the whole license text in
+        # this field. In this case fallback on classifers.
+        if license and '\n' not in license:
+            return license
+        for classifier in info['classifiers']:
+            if classifier.startswith("License"):
+                return classifier.split(" :: ")[-1]
         return "unknown"
 
     def get(self, package):
