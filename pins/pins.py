@@ -211,7 +211,7 @@ class LicenseHandler(tornado.web.RequestHandler):
         license = info.get('license')
         # Use the license unless someone blobbed the whole license text in
         # this field. In this case fallback on classifers.
-        if license and '\n' not in license:
+        if license and '\n' not in license and license.upper() != 'UNKNOWN':
             return license
         for classifier in info['classifiers']:
             if classifier.startswith("License"):
