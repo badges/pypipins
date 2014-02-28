@@ -12,7 +12,7 @@ import requests
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
-SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.png"
+SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
 
 def format_number(singular, number):
     value = singular % {'value': number}
@@ -30,9 +30,10 @@ intword_converters = (
 class PypiHandler(tornado.web.RequestHandler):
     '''Get the pypi json data for the package, and process.'''
     shield_subject = None
+    format = 'png'
 
-    def get(self, package, *args, **kwargs):
-        self.set_header("Content-Type", "image/png")
+    def get(self, package, format, *args, **kwargs):
+        self.format = format
         url = PYPI_URL % package
         try:
             response = requests.get(url)
@@ -49,9 +50,15 @@ class PypiHandler(tornado.web.RequestHandler):
 
     def write_shield(self, status, colour='brightgreen'):
         '''Obtain and write the shield to the response.'''
-        shield_url = SHIELD_URL % (self.shield_subject, status, colour)
-        shield = requests.get(shield_url).content
-        img = BytesIO(shield)
+        shield_url = SHIELD_URL % (
+            self.shield_subject,
+            status,
+            colour,
+            self.format,
+        )
+        shield_response = requests.get(shield_url)
+        self.set_header('Content-Type', shield_response.headers['content-type'])
+        img = BytesIO(shield_response.content)
         img.seek(0)
         self.write(img.read())
 
@@ -160,12 +167,12 @@ class LicenseHandler(PypiHandler):
 
 
 application = tornado.web.Application([
-    (r"^/d/(.*?)/badge.png", DownloadHandler),
-    (r"^/v/(.*?)/badge.png", LatestHandler),
-    (r"^/wheel/(.*?)/badge.png", WheelHandler),
-    (r"^/egg/(.*?)/badge.png", EggHandler),
-    (r"^/license/(.*?)/badge.png", LicenseHandler),
-    (r"^/format/(.*?)/badge.png", FormatHandler),
+    (r"^/d/(.*?)/badge.(.*?)", DownloadHandler),
+    (r"^/v/(.*?)/badge.(.*?)", LatestHandler),
+    (r"^/wheel/(.*?)/badge.(.*?)", WheelHandler),
+    (r"^/egg/(.*?)/badge.(.*?)", EggHandler),
+    (r"^/license/(.*?)/badge.(.*?)", LicenseHandler),
+    (r"^/format/(.*?)/badge.(.*?)", FormatHandler),
 ])
 
 if __name__ == "__main__":
