@@ -12,7 +12,7 @@ import requests
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
-SHIELD_URL = "http://localhost:9000/v1/%s-%s-%s.png"
+SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.png"
 
 
 def format_number(singular, number):
