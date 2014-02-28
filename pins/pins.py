@@ -14,6 +14,12 @@ import requests
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.png"
 
+def get_shield(subject, status, colour):
+    shield_url = SHIELD_URL % (subject, status, colour)
+    shield = requests.get(shield_url).content
+    img = BytesIO(shield)
+    img.seek(0)
+    return img.read()
 
 def format_number(singular, number):
     value = singular % {'value': number}
@@ -64,11 +70,7 @@ class DownloadHandler(tornado.web.RequestHandler):
         downloads = self.intword(self.get_downloads(url, period))
         period = "this_%s" % period if period in ('week', 'month') else "today"
         pperiod = "%s_%s" % (downloads, period)
-        shield_url = SHIELD_URL % ("downloads", pperiod, 'brightgreen')
-        shield = requests.get(shield_url).content
-        img = BytesIO(shield)
-        img.seek(0)
-        self.write(img.read())
+        self.write(get_shield('downloads', pperiod, 'brightgreen'))
 
 
 class LatestHandler(tornado.web.RequestHandler):
@@ -86,11 +88,7 @@ class LatestHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "image/png")
         url = PYPI_URL % package
         version = self.get_version(url)
-        shield_url = SHIELD_URL % ("version", version, 'brightgreen')
-        shield = requests.get(shield_url).content
-        img = BytesIO(shield)
-        img.seek(0)
-        self.write(img.read())
+        self.write(get_shield('version', version, 'brightgreen'))
 
 
 class WheelHandler(tornado.web.RequestHandler):
@@ -115,11 +113,7 @@ class WheelHandler(tornado.web.RequestHandler):
         has_wheel = self.get_wheel(url)
         wheel_text = "yes" if has_wheel else "no"
         colour = "green" if has_wheel else "red"
-        shield_url = SHIELD_URL % ("wheel", wheel_text, colour)
-        shield = requests.get(shield_url).content
-        img = BytesIO(shield)
-        img.seek(0)
-        self.write(img.read())
+        self.write(get_shield('wheel', wheel_text, colour))
 
 
 class EggHandler(tornado.web.RequestHandler):
@@ -144,11 +138,7 @@ class EggHandler(tornado.web.RequestHandler):
         has_egg = self.get_egg(url)
         egg_text = "yes" if has_egg else "no"
         colour = "red" if has_egg else "brightgreen"
-        shield_url = SHIELD_URL % ("egg", egg_text, colour)
-        shield = requests.get(shield_url).content
-        img = BytesIO(shield)
-        img.seek(0)
-        self.write(img.read())
+        self.write(get_shield('egg', egg_text, colour))
 
 
 class FormatHandler(tornado.web.RequestHandler):
@@ -192,11 +182,7 @@ class FormatHandler(tornado.web.RequestHandler):
         has_wheel = self.get_wheel(url)
         text = "wheel" if has_wheel else text
         colour = "brightgreen" if has_wheel else colour
-        shield_url = SHIELD_URL % ("format", text, colour)
-        shield = requests.get(shield_url).content
-        img = BytesIO(shield)
-        img.seek(0)
-        self.write(img.read())
+        self.write(get_shield('format', text, colour))
 
 
 class LicenseHandler(tornado.web.RequestHandler):
@@ -223,11 +209,7 @@ class LicenseHandler(tornado.web.RequestHandler):
         url = PYPI_URL % package
         license = self.get_license(url)
         license = license.replace(' ', '_')
-        shield_url = SHIELD_URL % ("license", license, "blue")
-        shield = requests.get(shield_url).content
-        img = BytesIO(shield)
-        img.seek(0)
-        self.write(img.read())
+        self.write(get_shield('license', license, 'blue'))
 
 
 application = tornado.web.Application([
