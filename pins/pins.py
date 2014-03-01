@@ -13,6 +13,7 @@ import requests
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
+# SHIELD_URL = "http://localhost:9000/v1/%s-%s-%s.png"  # pypip.in uses a local version of img.shields.io
 
 def format_number(singular, number):
     value = singular % {'value': number}
@@ -167,8 +168,10 @@ class LicenseHandler(PypiHandler):
 
 
 application = tornado.web.Application([
-    (r"^/d/(.*?)/badge.(.*?)", DownloadHandler),
-    (r"^/v/(.*?)/badge.(.*?)", LatestHandler),
+    (r"^/d/(.*?)/badge.(.*?)", DownloadHandler),  # I want to deprecrate the d/v version of the handlers
+    (r"^/v/(.*?)/badge.(.*?)", LatestHandler),    # and switch to full named versions.
+    (r"^/download/(.*?)/badge.(.*?)", DownloadHandler),
+    (r"^/version/(.*?)/badge.(.*?)", LatestHandler),
     (r"^/wheel/(.*?)/badge.(.*?)", WheelHandler),
     (r"^/egg/(.*?)/badge.(.*?)", EggHandler),
     (r"^/license/(.*?)/badge.(.*?)", LicenseHandler),
