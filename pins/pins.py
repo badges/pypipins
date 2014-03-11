@@ -116,7 +116,7 @@ class WheelHandler(PypiHandler):
     def handle_package_data(self, data):
         has_wheel = has_package(data, 'bdist_wheel')
         wheel_text = "yes" if has_wheel else "no"
-        colour = "green" if has_wheel else "red"
+        colour = "brightgreen" if has_wheel else "red"
         self.write_shield(wheel_text, colour)
 
 
