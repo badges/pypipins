@@ -32,6 +32,11 @@ i.e.
 
 You will need to replace **PYPI_PKG_NAME** with your package name.
 
+`Service Status <http://status.pypip.in/>`__
+============================================
+
+`Service status <http://status.pypip.in/>`__ is provided by the wonderful guys at `statuspage.io <https://www.statuspage.io/>`__.
+
 Shields & Usage
 ===============
 
