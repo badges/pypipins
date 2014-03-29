@@ -14,10 +14,10 @@ setup(
     zip_safe=False,
     keywords='PyPI crate.io badges pins',
     install_requires=[
-        'Pillow>=2.2.1',
-        'requests>=2.0.1',
-        'tornado>=3.1.1',
-        'simplejson>=3.3.1',
+        'Twisted>=13.2.0',
+        'klein>=0.2.3',
+        'requests>=2.2.1',
+        'simplejson>=3.3.3',
     ],
     classifiers=[
         'Programming Language :: Python :: 2',

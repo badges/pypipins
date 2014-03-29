@@ -6,14 +6,14 @@ except ImportError:
     from io import BytesIO
 
 import simplejson as json
-import tornado.ioloop
-import tornado.web
 import requests
+from klein import run, route
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
 # SHIELD_URL = "http://localhost:9000/v1/%s-%s-%s.png"  # pypip.in uses a local version of img.shields.io
+
 
 def format_number(singular, number):
     value = singular % {'value': number}
@@ -28,12 +28,14 @@ intword_converters = (
 )
 
 
-class PypiHandler(tornado.web.RequestHandler):
+class PypiHandler(object):
     '''Get the pypi json data for the package, and process.'''
     shield_subject = None
+    request = None
     format = 'png'
 
-    def get(self, package, format, *args, **kwargs):
+    def get(self, request, package, format, *args, **kwargs):
+        self.request = request
         self.format = format
         url = PYPI_URL % package
         try:
@@ -43,7 +45,7 @@ class PypiHandler(tornado.web.RequestHandler):
             return self.write_shield('error', 'red')
         else:
             data = json.loads(response.content)
-            self.handle_package_data(data)
+            return self.handle_package_data(data)
 
     def handle_package_data(self, json_data):
         '''Look at the pypi data and decide what text goes on the badge.'''
@@ -58,10 +60,10 @@ class PypiHandler(tornado.web.RequestHandler):
             self.format,
         )
         shield_response = requests.get(shield_url)
-        self.set_header('Content-Type', shield_response.headers['content-type'])
         img = BytesIO(shield_response.content)
         img.seek(0)
-        self.write(img.read())
+        return img
+
 
 class DownloadHandler(PypiHandler):
     shield_subject = 'downloads'
@@ -83,21 +85,23 @@ class DownloadHandler(PypiHandler):
                 return converters(new_value)
 
     def handle_package_data(self, data):
-        period = self.get_argument('period', 'month')
+        period = self.request.args.get('period', 'month')
+        if isinstance(period, list):
+            period = period[0]
         if period not in ('day', 'week', 'month'):
             period = 'month'
         downloads = data['info']['downloads']['last_{0}'.format(period)]
         downloads = self.intword(downloads)
         period = "this_%s" % period if period in ('week', 'month') else "today"
         pperiod = "%s_%s" % (downloads, period)
-        self.write_shield(pperiod)
+        return self.write_shield(pperiod)
 
 
-class LatestHandler(PypiHandler):
+class VersionHandler(PypiHandler):
     shield_subject = 'version'
 
     def handle_package_data(self, data):
-        self.write_shield(data['info']['version'])
+        return self.write_shield(data['info']['version'])
 
 
 def has_package(data, package_type):
@@ -117,7 +121,7 @@ class WheelHandler(PypiHandler):
         has_wheel = has_package(data, 'bdist_wheel')
         wheel_text = "yes" if has_wheel else "no"
         colour = "brightgreen" if has_wheel else "red"
-        self.write_shield(wheel_text, colour)
+        return self.write_shield(wheel_text, colour)
 
 
 class EggHandler(PypiHandler):
@@ -127,7 +131,7 @@ class EggHandler(PypiHandler):
         has_egg = has_package(data, 'bdist_egg')
         egg_text = "yes" if has_egg else "no"
         colour = "red" if has_egg else "brightgreen"
-        self.write_shield(egg_text, colour)
+        return self.write_shield(egg_text, colour)
 
 
 class FormatHandler(PypiHandler):
@@ -142,7 +146,7 @@ class FormatHandler(PypiHandler):
         has_wheel = has_package(data, 'bdist_wheel')
         text = "wheel" if has_wheel else text
         colour = "brightgreen" if has_wheel else colour
-        self.write_shield(text, colour)
+        return self.write_shield(text, colour)
 
 
 class LicenseHandler(PypiHandler):
@@ -164,21 +168,27 @@ class LicenseHandler(PypiHandler):
     def handle_package_data(self, data):
         license = self.get_license(data)
         license = license.replace(' ', '_')
-        self.write_shield(license, 'blue')
+        return self.write_shield(license, 'blue')
 
 
-application = tornado.web.Application([
-    (r"^/d/(.*?)/badge.(.*?)", DownloadHandler),  # I want to deprecrate the d/v version of the handlers
-    (r"^/v/(.*?)/badge.(.*?)", LatestHandler),    # and switch to full named versions.
-    (r"^/download/(.*?)/badge.(.*?)", DownloadHandler),
-    (r"^/version/(.*?)/badge.(.*?)", LatestHandler),
-    (r"^/wheel/(.*?)/badge.(.*?)", WheelHandler),
-    (r"^/egg/(.*?)/badge.(.*?)", EggHandler),
-    (r"^/license/(.*?)/badge.(.*?)", LicenseHandler),
-    (r"^/format/(.*?)/badge.(.*?)", FormatHandler),
-])
+generators = {
+    'd': DownloadHandler,
+    'download': DownloadHandler,
+    'v': VersionHandler,
+    'version': VersionHandler,
+    'wheel': WheelHandler,
+    'egg': EggHandler,
+    'license': LicenseHandler,
+    'format': FormatHandler,
+}
 
-if __name__ == "__main__":
-    application.listen(8888)
-    print("Starting tornado server on port 8888...")
-    tornado.ioloop.IOLoop.instance().start()
+
+@route('/<string:generator>/<string:package>/badge.png')
+def shield(request, generator, package):
+    klass = generators[generator]()
+    img = klass.get(request, package, 'png')
+    request.headers.update({'content-type': 'image/png'})
+    return img.read()
+
+
+run("localhost", 8888)
