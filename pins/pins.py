@@ -13,7 +13,7 @@ from klein import run, route
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
-# SHIELD_URL = "http://localhost:9000/v1/%s-%s-%s.%s"  # pypip.in uses a local version of img.shields.io
+# SHIELD_URL = "http://localhost:9000/badge/%s-%s-%s.%s"  # pypip.in uses a local version of img.shields.io
 
 
 def format_number(singular, number):

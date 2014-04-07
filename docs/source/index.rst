@@ -50,6 +50,24 @@ Shields & Usage
     format
     license
 
+Using other image formats
+=========================
+
+By default, pypip.in returns images in PNG format but you can have it return 
+other formats by changing the badge extension.
+
+.. code::
+
+    https://pypip.in/download/blackhole/badge.svg
+
+As an example you could use any of the following extensions;
+
+- SVG
+- PNG
+- JPEG
+- GIF
+- TIFF
+
 Thanks
 ======
 
