@@ -4,6 +4,7 @@ try:
 except ImportError:
     # Python 3
     from io import BytesIO
+import mimetypes
 
 import simplejson as json
 import requests
@@ -12,7 +13,7 @@ from klein import run, route
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
-# SHIELD_URL = "http://localhost:9000/v1/%s-%s-%s.png"  # pypip.in uses a local version of img.shields.io
+# SHIELD_URL = "http://localhost:9000/v1/%s-%s-%s.%s"  # pypip.in uses a local version of img.shields.io
 
 
 def format_number(singular, number):
@@ -183,12 +184,16 @@ generators = {
 }
 
 
-@route('/<string:generator>/<string:package>/badge.png')
-def shield(request, generator, package):
+@route('/<string:generator>/<string:package>/badge.<string:extension>')
+def shield(request, generator, package, extension):
     klass = generators[generator]()
-    img = klass.get(request, package, 'png')
-    request.headers.update({'content-type': 'image/png'})
+    img = klass.get(request, package, extension)
+    ext = mimetypes.types_map[".{0}".format(extension)]
+    request.headers.update({'content-type': ext})
     return img.read()
 
 
-run("localhost", 8888)
+if __name__ == '__main__':
+    if '.svg' not in mimetypes.types_map:
+        mimetypes.add_type("image/svg+xml", ".svg")
+    run("localhost", 8888)
