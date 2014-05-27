@@ -102,7 +102,7 @@ class VersionHandler(PypiHandler):
     shield_subject = 'version'
 
     def handle_package_data(self, data):
-        return self.write_shield(data['info']['version'])
+        return self.write_shield(data['info']['version'].replace('-', '--'))
 
 
 def has_package(data, package_type):
