@@ -5,6 +5,7 @@ except ImportError:
     # Python 3
     from io import BytesIO
 import mimetypes
+import re
 
 import simplejson as json
 import requests
@@ -172,6 +173,33 @@ class LicenseHandler(PypiHandler):
         return self.write_shield(license, 'blue')
 
 
+class PythonVersionsHandler(PypiHandler):
+    shield_subject = 'python'
+
+    def get_versions(self, data):
+        """"
+        Get supported Python versions
+        """
+        classifiers = data['info']['classifiers']
+        if not isinstance(classifiers, list):
+            return "none found"
+        cs = []
+        version_re = re.compile(r"Programming Language \:\: Python \:\: \d\.\d")
+        for classifier in classifiers:
+            if version_re.match(classifier):
+                cs.append(classifier[-3:])
+        if not len(cs) > 0:
+            return "none found"
+        else:
+            return cs
+
+    def handle_package_data(self, data):
+        versions = self.get_versions(data)
+        if not isinstance(versions, list):
+            return self.write_shield(versions, 'red')
+        return self.write_shield(", ".join(versions), 'blue')
+
+
 generators = {
     'd': DownloadHandler,
     'download': DownloadHandler,
@@ -181,6 +209,7 @@ generators = {
     'egg': EggHandler,
     'license': LicenseHandler,
     'format': FormatHandler,
+    'py_versions': PythonVersionsHandler,
 }
 
 

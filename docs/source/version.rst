@@ -27,21 +27,3 @@ Markdown
 ::
 
     [![Latest Version](https://pypip.in/version/PYPI_PKG_NAME/badge.png)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
-
-Textile
-~~~~~~~
-::
-
-    !https://pypip.in/version/PYPI_PKG_NAME/badge.png!:https://pypi.python.org/pypi/PYPI_PKG_NAME/
-
-RDOC
-~~~~
-::
-
-    {<img src="https://pypip.in/version/PYPI_PKG_NAME/badge.png" alt="Latest Version" />}[https://pypi.python.org/pypi/PYPI_PKG_NAME/]
-
-AsciiDoc
-~~~~~~~~
-::
-
-    image:https://pypip.in/version/PYPI_PKG_NAME/badge.png["Latest Version", link="https://pypi.python.org/pypi/PYPI_PKG_NAME/"]

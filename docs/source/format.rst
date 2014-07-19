@@ -32,22 +32,3 @@ Markdown
 ::
 
     [![Download format](https://pypip.in/format/PYPI_PKG_NAME/badge.png)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
-
-Textile
-~~~~~~~
-::
-
-    !https://pypip.in/format/PYPI_PKG_NAME/badge.png!:https://pypi.python.org/pypi/PYPI_PKG_NAME/
-
-RDOC
-~~~~
-::
-
-    {<img src="https://pypip.in/format/PYPI_PKG_NAME/badge.png" alt="Download format" />}[https://pypi.python.org/pypi/PYPI_PKG_NAME/]
-
-AsciiDoc
-~~~~~~~~
-::
-
-    image:https://pypip.in/format/PYPI_PKG_NAME/badge.png["Download format", link="https://pypi.python.org/pypi/PYPI_PKG_NAME/"]
-

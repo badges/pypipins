@@ -27,22 +27,3 @@ Markdown
 ::
 
     [![Wheel Status](https://pypip.in/wheel/PYPI_PKG_NAME/badge.png)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
-
-Textile
-~~~~~~~
-::
-
-    !https://pypip.in/wheel/PYPI_PKG_NAME/badge.png!:https://pypi.python.org/pypi/PYPI_PKG_NAME/
-
-RDOC
-~~~~
-::
-
-    {<img src="https://pypip.in/wheel/PYPI_PKG_NAME/badge.png" alt="Wheel Status" />}[https://pypi.python.org/pypi/PYPI_PKG_NAME/]
-
-AsciiDoc
-~~~~~~~~
-::
-
-    image:https://pypip.in/wheel/PYPI_PKG_NAME/badge.png["Wheel Status", link="https://pypi.python.org/pypi/PYPI_PKG_NAME/"]
-

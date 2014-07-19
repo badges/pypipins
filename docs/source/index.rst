@@ -8,6 +8,9 @@ PyPI Shields/Pins
 .. image:: https://pypip.in/v/blackhole/badge.png
         :target: https://pypi.python.org/pypi/blackhole/
 
+.. image:: https://pypip.in/py_versions/blackhole/badge.png
+        :target: https://pypi.python.org/pypi/blackhole/
+
 .. image:: https://pypip.in/egg/blackhole/badge.png
         :target: https://pypi.python.org/pypi/blackhole/
 
@@ -45,6 +48,7 @@ Shields & Usage
 
     downloads
     version
+    python_versions
     wheel
     egg
     format
@@ -53,7 +57,7 @@ Shields & Usage
 Using other image formats
 =========================
 
-By default, pypip.in returns images in PNG format but you can have it return 
+By default, pypip.in returns images in PNG format but you can have it return
 other formats by changing the badge extension.
 
 .. code::
@@ -79,4 +83,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
