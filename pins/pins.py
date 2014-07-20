@@ -61,6 +61,10 @@ class PypiHandler(object):
             colour,
             self.format,
         )
+
+        style = self.request.args.get('style', None)
+        if style is not None and style[0] in ['flat', ]:
+            shield_url += "?style={0}".format(style[0])
         shield_response = requests.get(shield_url)
         img = BytesIO(shield_response.content)
         img.seek(0)

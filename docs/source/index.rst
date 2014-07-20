@@ -54,6 +54,21 @@ Shields & Usage
     format
     license
 
+Shield Styling
+==============
+
+You can change the style of the shield from the rounded corners to a cleaner,
+flat style by setting a style value in the REQUEST_URI.
+
+If no style is provided, the default rounded corner style will be used, setting
+the style value to 'flat' will use the flat style as seen below.
+
+.. code::
+
+    ?style=flat
+
+.. image:: https://pypip.in/py_versions/blackhole/badge.png?style=flat
+
 Using other image formats
 =========================
 
