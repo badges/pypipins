@@ -12,18 +12,18 @@ Image URL
 ~~~~~~~~~
 ::
 
-    https://pypip.in/version/PYPI_PKG_NAME/badge.svg
+    https://pypip.in/version/<PYPI_PKG_NAME>/badge.svg
 
 RST
 ~~~
 ::
 
-    .. image:: https://pypip.in/version/PYPI_PKG_NAME/badge.svg
-        :target: https://pypi.python.org/pypi/PYPI_PKG_NAME/
+    .. image:: https://pypip.in/version/<PYPI_PKG_NAME>/badge.svg
+        :target: https://pypi.python.org/pypi/<PYPI_PKG_NAME>/
         :alt: Latest Version
 
 Markdown
 ~~~~~~~~
 ::
 
-    [![Latest Version](https://pypip.in/version/PYPI_PKG_NAME/badge.svg)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
+    [![Latest Version](https://pypip.in/version/<PYPI_PKG_NAME>/badge.svg)](https://pypi.python.org/pypi/<PYPI_PKG_NAME>/)

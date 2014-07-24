@@ -12,18 +12,18 @@ Image URL
 ~~~~~~~~~
 ::
 
-    https://pypip.in/egg/PYPI_PKG_NAME/badge.svg
+    https://pypip.in/egg/<PYPI_PKG_NAME>/badge.svg
 
 RST
 ~~~
 ::
 
-    .. image:: https://pypip.in/egg/PYPI_PKG_NAME/badge.svg
-        :target: https://pypi.python.org/pypi/PYPI_PKG_NAME/
+    .. image:: https://pypip.in/egg/<PYPI_PKG_NAME>/badge.svg
+        :target: https://pypi.python.org/pypi/<PYPI_PKG_NAME>/
         :alt: Egg Status
 
 Markdown
 ~~~~~~~~
 ::
 
-    [![Egg Status](https://pypip.in/egg/PYPI_PKG_NAME/badge.svg)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
+    [![Egg Status](https://pypip.in/egg/<PYPI_PKG_NAME>/badge.svg)](https://pypi.python.org/pypi/<PYPI_PKG_NAME>/)

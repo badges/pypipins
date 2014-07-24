@@ -12,18 +12,18 @@ Image URL
 ~~~~~~~~~
 ::
 
-    https://pypip.in/license/PYPI_PKG_NAME/badge.svg
+    https://pypip.in/license/<PYPI_PKG_NAME>/badge.svg
 
 RST
 ~~~
 ::
 
-    .. image:: https://pypip.in/license/PYPI_PKG_NAME/badge.svg
-        :target: https://pypi.python.org/pypi/PYPI_PKG_NAME/
+    .. image:: https://pypip.in/license/<PYPI_PKG_NAME>/badge.svg
+        :target: https://pypi.python.org/pypi/<PYPI_PKG_NAME>/
         :alt: License
 
 Markdown
 ~~~~~~~~
 ::
 
-    [![License](https://pypip.in/license/PYPI_PKG_NAME/badge.svg)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
+    [![License](https://pypip.in/license/<PYPI_PKG_NAME>/badge.svg)](https://pypi.python.org/pypi/<PYPI_PKG_NAME>/)

@@ -12,18 +12,18 @@ Image URL
 ~~~~~~~~~
 ::
 
-    https://pypip.in/wheel/PYPI_PKG_NAME/badge.svg
+    https://pypip.in/wheel/<PYPI_PKG_NAME>/badge.svg
 
 RST
 ~~~
 ::
 
-    .. image:: https://pypip.in/wheel/PYPI_PKG_NAME/badge.svg
-        :target: https://pypi.python.org/pypi/PYPI_PKG_NAME/
+    .. image:: https://pypip.in/wheel/<PYPI_PKG_NAME>/badge.svg
+        :target: https://pypi.python.org/pypi/<PYPI_PKG_NAME>/
         :alt: Wheel Status
 
 Markdown
 ~~~~~~~~
 ::
 
-    [![Wheel Status](https://pypip.in/wheel/PYPI_PKG_NAME/badge.svg)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
+    [![Wheel Status](https://pypip.in/wheel/<PYPI_PKG_NAME>/badge.svg)](https://pypi.python.org/pypi/<PYPI_PKG_NAME>/)

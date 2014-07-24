@@ -36,7 +36,7 @@ i.e.
 - Sphinx not sphinx
 - Django not django
 
-You will need to replace **PYPI_PKG_NAME** with your package name.
+You will need to replace **<PYPI_PKG_NAME>** with your package name.
 
 `Service Status <http://status.pypip.in/>`__
 ============================================

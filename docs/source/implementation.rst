@@ -14,18 +14,18 @@ Image URL
 ~~~~~~~~~
 ::
 
-    https://pypip.in/implementation/PYPI_PKG_NAME/badge.svg
+    https://pypip.in/implementation/<PYPI_PKG_NAME>/badge.svg
 
 RST
 ~~~
 ::
 
-    .. image:: https://pypip.in/implementation/PYPI_PKG_NAME/badge.svg
-        :target: https://pypi.python.org/pypi/PYPI_PKG_NAME/
+    .. image:: https://pypip.in/implementation/<PYPI_PKG_NAME>/badge.svg
+        :target: https://pypi.python.org/pypi/<PYPI_PKG_NAME>/
         :alt: Supported Python implementations
 
 Markdown
 ~~~~~~~~
 ::
 
-    [![Supported Python implementations](https://pypip.in/implementation/PYPI_PKG_NAME/badge.svg)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
+    [![Supported Python implementations](https://pypip.in/implementation/<PYPI_PKG_NAME>/badge.svg)](https://pypi.python.org/pypi/<PYPI_PKG_NAME>/)
