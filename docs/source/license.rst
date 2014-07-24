@@ -2,7 +2,7 @@
 License
 =======
 
-.. image:: https://pypip.in/license/blackhole/badge.png
+.. image:: https://pypip.in/license/blackhole/badge.svg
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: License
 
@@ -12,13 +12,13 @@ Image URL
 ~~~~~~~~~
 ::
 
-    https://pypip.in/license/PYPI_PKG_NAME/badge.png
+    https://pypip.in/license/PYPI_PKG_NAME/badge.svg
 
 RST
 ~~~
 ::
 
-    .. image:: https://pypip.in/license/PYPI_PKG_NAME/badge.png
+    .. image:: https://pypip.in/license/PYPI_PKG_NAME/badge.svg
         :target: https://pypi.python.org/pypi/PYPI_PKG_NAME/
         :alt: License
 
@@ -26,4 +26,4 @@ Markdown
 ~~~~~~~~
 ::
 
-    [![License](https://pypip.in/license/PYPI_PKG_NAME/badge.png)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)
+    [![License](https://pypip.in/license/PYPI_PKG_NAME/badge.svg)](https://pypi.python.org/pypi/PYPI_PKG_NAME/)

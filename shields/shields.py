@@ -4,10 +4,10 @@ try:
 except ImportError:
     # Python 3
     from io import BytesIO
+import json
 import mimetypes
 import re
 
-import simplejson as json
 import requests
 from klein import run, route
 
@@ -24,7 +24,7 @@ def format_number(singular, number):
 
 
 intword_converters = (
-    (3, lambda number: format_number('%(value).1fK', number)),
+    (3, lambda number: format_number('%(value).1fk', number)),
     (6, lambda number: format_number('%(value).1fM', number)),
     (9, lambda number: format_number('%(value).1fB', number)),
 )
@@ -98,8 +98,8 @@ class DownloadHandler(PypiHandler):
             period = 'month'
         downloads = data['info']['downloads']['last_{0}'.format(period)]
         downloads = self.intword(downloads)
-        period = "this_%s" % period if period in ('week', 'month') else "today"
-        pperiod = "%s_%s" % (downloads, period)
+        period = "%s" % period if period in ('week', 'month') else "today"
+        pperiod = "%s/%s" % (downloads, period)
         return self.write_shield(pperiod)
 
 

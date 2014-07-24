@@ -5,19 +5,18 @@ from setuptools import setup, find_packages
 setup(
     name='pypipins',
     version='0.0.0',
-    description='Badges for your site to display download totals, latest version using crate.io http://pypip.in',
+    description='Badges for your site to display download totals, latest version using crate.io https://pypip.in',
     # long_description=long_description,
     author='Kura',
     author_email='kura@kura.io',
-    url='https://github.com/kura/pypipins',
+    url='https://github.com/badges/pypipins',
     packages=find_packages(),
-    zip_safe=False,
+    zip_safe=True,
     keywords='PyPI crate.io badges pins',
     install_requires=[
         'Twisted>=13.2.0',
         'klein>=0.2.3',
         'requests>=2.2.1',
-        'simplejson>=3.3.3',
     ],
     classifiers=[
         'Programming Language :: Python :: 2',

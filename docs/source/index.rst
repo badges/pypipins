@@ -2,25 +2,25 @@
 PyPI Shields/Pins
 =================
 
-.. image:: https://pypip.in/d/blackhole/badge.png
+.. image:: https://pypip.in/d/blackhole/badge.svg
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/v/blackhole/badge.png
+.. image:: https://pypip.in/v/blackhole/badge.svg
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/py_versions/blackhole/badge.png
+.. image:: https://pypip.in/py_versions/blackhole/badge.svg
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/egg/blackhole/badge.png
+.. image:: https://pypip.in/egg/blackhole/badge.svg
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/wheel/blackhole/badge.png
+.. image:: https://pypip.in/wheel/blackhole/badge.svg
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/format/blackhole/badge.png
+.. image:: https://pypip.in/format/blackhole/badge.svg
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/license/blackhole/badge.png
+.. image:: https://pypip.in/license/blackhole/badge.svg
         :target: https://pypi.python.org/pypi/blackhole/
 
 PyPI Shields/Pins are shields for your GitHub repo, documentation or website that show
@@ -67,12 +67,12 @@ the style value to 'flat' will use the flat style as seen below.
 
     ?style=flat
 
-.. image:: https://pypip.in/py_versions/blackhole/badge.png?style=flat
+.. image:: https://pypip.in/py_versions/blackhole/badge.svg?style=flat
 
 Using other image formats
 =========================
 
-By default, pypip.in returns images in PNG format but you can have it return
+By default, pypip.in returns images in SVG format but you can have it return
 other formats by changing the badge extension.
 
 .. code::
