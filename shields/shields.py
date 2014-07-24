@@ -195,15 +195,49 @@ class PythonVersionsHandler(PypiHandler):
         if "Programming Language :: Python :: Implementation :: PyPy" in classifiers:
             cs.append('pypy')
         if not len(cs) > 0:
-            return "none found"
-        else:
-            return cs
+            # assume 2.7
+            return "2.7"
+        return cs
 
     def handle_package_data(self, data):
         versions = self.get_versions(data)
         if not isinstance(versions, list):
             return self.write_shield(versions, 'red')
         return self.write_shield(", ".join(versions), 'blue')
+
+
+class ImplementationHandler(PypiHandler):
+    shield_subject = 'implementation'
+
+    def get_implementations(self, data):
+        """"
+        Get supported Python implementations
+        """
+        classifiers = data['info']['classifiers']
+        if not isinstance(classifiers, list):
+            return "none found"
+        cs = []
+        if "Programming Language :: Python :: Implementation :: CPython" in classifiers:
+            cs.append('cpython')
+        if "Programming Language :: Python :: Implementation :: IronPython" in classifiers:
+            cs.append('iron')
+        if "Programming Language :: Python :: Implementation :: Jython" in classifiers:
+            cs.append('jython')
+        if "Programming Language :: Python :: Implementation :: PyPy" in classifiers:
+            cs.append('pypy')
+        if "Programming Language :: Python :: Implementation :: Stackless" in classifiers:
+            cs.append('stackless')
+        if not len(cs) > 0:
+            # assume CPython
+            return 'cpython'
+        return cs
+
+    def handle_package_data(self, data):
+        versions = self.get_implementations(data)
+        if not isinstance(versions, list):
+            return self.write_shield(versions, 'red')
+        return self.write_shield(", ".join(versions), 'blue')
+
 
 
 generators = {
@@ -216,6 +250,7 @@ generators = {
     'license': LicenseHandler,
     'format': FormatHandler,
     'py_versions': PythonVersionsHandler,
+    'implementation': ImplementationHandler,
 }
 
 

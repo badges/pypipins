@@ -4,9 +4,11 @@ Supported Python versions
 
 This shield displays which versions of Python your project supports.
 
-.. image:: https://pypip.in/py_versions/blackhole/badge.svg
+.. image:: https://pypip.in/py_versions/blackhole/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Supported Python versions
+
+If no version classifiers are found, we assume 2.7.
 
 Image URL
 ~~~~~~~~~

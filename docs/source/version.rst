@@ -4,7 +4,7 @@ Latest release
 
 This shield displays the latest version release of your package.
 
-.. image:: https://pypip.in/version/blackhole/badge.svg
+.. image:: https://pypip.in/version/blackhole/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Latest Version
 

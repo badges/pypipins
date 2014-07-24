@@ -2,7 +2,7 @@
 License
 =======
 
-.. image:: https://pypip.in/license/blackhole/badge.svg
+.. image:: https://pypip.in/license/blackhole/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: License
 

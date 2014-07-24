@@ -2,25 +2,28 @@
 PyPI Shields/Pins
 =================
 
-.. image:: https://pypip.in/d/blackhole/badge.svg
+.. image:: https://pypip.in/d/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/v/blackhole/badge.svg
+.. image:: https://pypip.in/v/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/py_versions/blackhole/badge.svg
+.. image:: https://pypip.in/py_versions/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/egg/blackhole/badge.svg
+.. image:: https://pypip.in/implementation/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/wheel/blackhole/badge.svg
+.. image:: https://pypip.in/egg/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/format/blackhole/badge.svg
+.. image:: https://pypip.in/wheel/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
-.. image:: https://pypip.in/license/blackhole/badge.svg
+.. image:: https://pypip.in/format/blackhole/badge.svg?style=flat
+        :target: https://pypi.python.org/pypi/blackhole/
+
+.. image:: https://pypip.in/license/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
 PyPI Shields/Pins are shields for your GitHub repo, documentation or website that show
@@ -49,6 +52,7 @@ Shields & Usage
     downloads
     version
     python_versions
+    implementation
     wheel
     egg
     format

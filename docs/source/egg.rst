@@ -4,7 +4,7 @@ Egg
 
 This shield displays whether your package has an egg version available.
 
-.. image:: https://pypip.in/egg/blackhole/badge.svg
+.. image:: https://pypip.in/egg/blackhole/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Egg Status
 

@@ -9,7 +9,7 @@ Wheel will be green as it is currently the best available format, source will
 be yellow and is basically neutral and egg is red, because you shouldn't be
 using eggs anymore.
 
-.. image:: https://pypip.in/format/blackhole/badge.svg
+.. image:: https://pypip.in/format/blackhole/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Download format
 

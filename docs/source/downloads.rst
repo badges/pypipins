@@ -5,15 +5,15 @@ Downloads
 This shield shows your package downloads, it defaults to use total this month but can
 show today, this week or this month.
 
-.. image:: https://pypip.in/download/blackhole/badge.svg?period=day
+.. image:: https://pypip.in/download/blackhole/badge.svg?period=day&style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Downloads
 
-.. image:: https://pypip.in/download/blackhole/badge.svg?period=week
+.. image:: https://pypip.in/download/blackhole/badge.svg?period=week&style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Downloads
 
-.. image:: https://pypip.in/download/blackhole/badge.svg?period=month
+.. image:: https://pypip.in/download/blackhole/badge.svg?period=month&style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Downloads
 

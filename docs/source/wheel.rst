@@ -4,7 +4,7 @@ Wheel
 
 This shield displays whether your package has a wheel version available.
 
-.. image:: https://pypip.in/wheel/blackhole/badge.svg
+.. image:: https://pypip.in/wheel/blackhole/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Wheel Status
 
