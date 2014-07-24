@@ -192,8 +192,6 @@ class PythonVersionsHandler(PypiHandler):
         for classifier in classifiers:
             if version_re.match(classifier):
                 cs.append(classifier[-3:])
-        if "Programming Language :: Python :: Implementation :: PyPy" in classifiers:
-            cs.append('pypy')
         if not len(cs) > 0:
             # assume 2.7
             return "2.7"
