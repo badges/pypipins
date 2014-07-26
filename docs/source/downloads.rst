@@ -39,7 +39,8 @@ Image URL
 
 RST
 ~~~
-::
+
+.. code-block:: rst
 
     .. image:: https://pypip.in/download/<PYPI_PKG_NAME>/badge.svg
         :target: https://pypi.python.org/pypi//<PYPI_PKG_NAME>/
@@ -47,6 +48,7 @@ RST
 
 Markdown
 ~~~~~~~~
+
 ::
 
     [![Downloads](https://pypip.in/download/<PYPI_PKG_NAME>/badge.svg)](https://pypi.python.org/pypi/<PYPI_PKG_NAME>/)

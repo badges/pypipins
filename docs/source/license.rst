@@ -16,7 +16,7 @@ Image URL
 
 RST
 ~~~
-::
+.. code-block:: rst
 
     .. image:: https://pypip.in/license/<PYPI_PKG_NAME>/badge.svg
         :target: https://pypi.python.org/pypi/<PYPI_PKG_NAME>/

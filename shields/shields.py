@@ -34,7 +34,7 @@ class PypiHandler(object):
     '''Get the pypi json data for the package, and process.'''
     shield_subject = None
     request = None
-    format = 'png'
+    format = 'svg'
 
     def get(self, request, package, format, *args, **kwargs):
         self.request = request
@@ -44,6 +44,7 @@ class PypiHandler(object):
             response = requests.get(url)
             response.raise_for_status()
         except requests.exceptions.HTTPError:
+            self.shield_subject = 'error'
             return self.write_shield('error', 'red')
         else:
             data = json.loads(response.content)
@@ -174,7 +175,8 @@ class LicenseHandler(PypiHandler):
     def handle_package_data(self, data):
         license = self.get_license(data)
         license = license.replace(' ', '_')
-        return self.write_shield(license, 'blue')
+        colour = "blue" if license != "unknown" else "red"
+        return self.write_shield(license, colour)
 
 
 class PythonVersionsHandler(PypiHandler):
@@ -200,7 +202,7 @@ class PythonVersionsHandler(PypiHandler):
     def handle_package_data(self, data):
         versions = self.get_versions(data)
         if not isinstance(versions, list):
-            return self.write_shield(versions, 'red')
+            return self.write_shield(versions, 'blue')
         return self.write_shield(", ".join(versions), 'blue')
 
 
@@ -233,7 +235,7 @@ class ImplementationHandler(PypiHandler):
     def handle_package_data(self, data):
         versions = self.get_implementations(data)
         if not isinstance(versions, list):
-            return self.write_shield(versions, 'red')
+            return self.write_shield(versions, 'blue')
         return self.write_shield(", ".join(versions), 'blue')
 
 
