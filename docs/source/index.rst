@@ -91,10 +91,20 @@ As an example you could use any of the following extensions;
 - GIF
 - TIFF
 
+Author
+======
+
+Written and maintained by `Kura <https://kura.io/>`_.
+
 Thanks
 ======
 
-PyPI Pins uses the wonderful http://b.repl.ca (Buckler) API.
+PyPI Pin uses;
+
+ - `Varnish <https://www.varnish-cache.org/>`_
+ - haproxy (`Kura's package with SSL and SPDY <https://kura.io/>`_)
+ - `Twisted <https://twistedmatrix.com/>`_
+ - A local and modified copy of `img.shields.io <https://img.shields.io/>`_
 
 Indices and tables
 ==================
