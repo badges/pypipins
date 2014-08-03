@@ -247,7 +247,7 @@ class StatusHandler(PypiHandler):
             if classifier.startswith("Development Status"):
                 bits = classifier.split(' :: ')
                 return bits[1].split(' - ')
-        return 1, "unknown"
+        return "1", "unknown"
 
     def handle_package_data(self, data):
         statuses = {'1': 'red', '2': 'red', '3': 'red', '4': 'yellow',
