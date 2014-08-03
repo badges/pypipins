@@ -14,6 +14,9 @@ PyPI Shields/Pins
 .. image:: https://pypip.in/implementation/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
+.. image:: https://pypip.in/status/blackhole/badge.svg?style=flat
+        :target: https://pypi.python.org/pypi/blackhole/
+
 .. image:: https://pypip.in/egg/blackhole/badge.svg?style=flat
         :target: https://pypi.python.org/pypi/blackhole/
 
@@ -53,6 +56,7 @@ Shields & Usage
     version
     python_versions
     implementation
+    status
     wheel
     egg
     format

@@ -1,20 +1,16 @@
-try:
-    # Python 2
-    from StringIO import StringIO as BytesIO
-except ImportError:
-    # Python 3
-    from io import BytesIO
+import gc
 import json
 import mimetypes
 import re
 
 import requests
-from klein import run, route
+from klein import Klein
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
 # SHIELD_URL = "http://localhost:9000/badge/%s-%s-%s.%s"  # pypip.in uses a local version of img.shields.io
+app = Klein()
 
 
 def format_number(singular, number):
@@ -67,9 +63,7 @@ class PypiHandler(object):
         if style is not None and style[0] in ['flat', ]:
             shield_url += "?style={0}".format(style[0])
         shield_response = requests.get(shield_url)
-        img = BytesIO(shield_response.content)
-        img.seek(0)
-        return img
+        return shield_response.content
 
 
 class DownloadHandler(PypiHandler):
@@ -239,6 +233,30 @@ class ImplementationHandler(PypiHandler):
         return self.write_shield(", ".join(versions), 'blue')
 
 
+class StatusHandler(PypiHandler):
+    shield_subject = 'status'
+
+    def get_implementations(self, data):
+        """"
+        Get supported Python implementations
+        """
+        classifiers = data['info']['classifiers']
+        if not isinstance(classifiers, list):
+            return "none found"
+        for classifier in classifiers:
+            if classifier.startswith("Development Status"):
+                bits = classifier.split(' :: ')
+                return bits[1].split(' - ')
+        return 1, "unknown"
+
+    def handle_package_data(self, data):
+        statuses = {'1': 'red', '2': 'red', '3': 'red', '4': 'yellow',
+                    '5': 'brightgreen', '6': 'brightgreen', '7': 'red'}
+        code, status = self.get_implementations(data)
+        status = status.lower().replace('-', '--')
+        status = "stable" if status == "production/stable" else status
+        return self.write_shield(status, statuses[code])
+
 
 generators = {
     'd': DownloadHandler,
@@ -251,19 +269,21 @@ generators = {
     'format': FormatHandler,
     'py_versions': PythonVersionsHandler,
     'implementation': ImplementationHandler,
+    'status': StatusHandler,
 }
 
 
-@route('/<string:generator>/<string:package>/badge.<string:extension>')
+@app.route('/<string:generator>/<string:package>/badge.<string:extension>')
 def shield(request, generator, package, extension):
-    klass = generators[generator]()
-    img = klass.get(request, package, extension)
+    gc.collect()
     ext = mimetypes.types_map[".{0}".format(extension)]
     request.headers.update({'content-type': ext})
-    return img.read()
+    klass = generators[generator]()
+    img = klass.get(request, package, extension)
+    return img
 
 
 if __name__ == '__main__':
     if '.svg' not in mimetypes.types_map:
         mimetypes.add_type("image/svg+xml", ".svg")
-    run("localhost", 8888)
+    app.run("localhost", 8888)
