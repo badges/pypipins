@@ -2,13 +2,8 @@
 Development Status
 ==================
 
-This shield displays the development status of your package.
-
-.. image:: https://pypip.in/status/blackhole/badge.svg?style=flat
-    :target: https://pypi.python.org/pypi/blackhole/
-    :alt: Development Status
-
-It uses the `Development Status` `classifiers from PyPI
+This shield displays the development status of your package. It uses the
+`Development Status` `classifier from PyPI
 <https://pypi.python.org/pypi?%3Aaction=list_classifiers>`_.
 
 ::
