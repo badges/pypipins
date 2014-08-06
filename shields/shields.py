@@ -1,16 +1,30 @@
+try:
+    from StringIO import StringIO as BytesIO
+except ImportError:
+    from BytesIO import BytesIO
+
 import gc
+import hashlib
 import json
 import mimetypes
+import os
 import re
+import time
 
-import requests
 from klein import Klein
+from redis import Redis
+import requests
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
 # SHIELD_URL = "http://localhost:9000/badge/%s-%s-%s.%s"  # pypip.in uses a local version of img.shields.io
+FILE_CACHE = "/tmp/shields.py/"
+CACHE_TIME = (60 * 60) * 2  # 2 hours
+REDIS_EXPIRE = 60 * 10  # 10 minutes
+
 app = Klein()
+redis = Redis()
 
 
 def format_number(singular, number):
@@ -31,11 +45,16 @@ class PypiHandler(object):
     shield_subject = None
     request = None
     format = 'svg'
+    cacheable = False
 
     def get(self, request, package, format, *args, **kwargs):
         self.request = request
         self.format = format
         url = PYPI_URL % package
+        r_data = redis.get(package)
+        if r_data:
+            data = json.loads(r_data)
+            return self.handle_package_data(data)
         try:
             response = requests.get(url)
             response.raise_for_status()
@@ -43,12 +62,17 @@ class PypiHandler(object):
             self.shield_subject = 'error'
             return self.write_shield('error', 'red')
         else:
+            redis.set(package, response.content)
+            redis.expire(package, REDIS_EXPIRE)
             data = json.loads(response.content)
             return self.handle_package_data(data)
 
     def handle_package_data(self, json_data):
         '''Look at the pypi data and decide what text goes on the badge.'''
         raise NotImplementedError
+
+    def hash(self, url):
+        return hashlib.md5(url).hexdigest()
 
     def write_shield(self, status, colour='brightgreen'):
         '''Obtain and write the shield to the response.'''
@@ -58,12 +82,29 @@ class PypiHandler(object):
             colour,
             self.format,
         )
-
         style = self.request.args.get('style', None)
         if style is not None and style[0] in ['flat', ]:
             shield_url += "?style={0}".format(style[0])
-        shield_response = requests.get(shield_url)
-        return shield_response.content
+
+        ihash = self.hash(shield_url)
+        cache = os.path.join(FILE_CACHE, ihash)
+        if os.path.exists(cache) and self.cacheable:
+            mtime = os.stat(cache).st_mtime + CACHE_TIME
+            if mtime > time.time():
+                return open(cache).read()
+
+        shield_response = requests.get(shield_url, stream=True)
+        img = BytesIO()
+        for chunk in shield_response.iter_content(1024):
+            if not chunk:
+                break
+            img.write(chunk)
+        if self.cacheable:
+            with open(cache, 'w') as ifile:
+                img.seek(0)
+                ifile.write(img.read())
+        img.seek(0)
+        return img.read()
 
 
 class DownloadHandler(PypiHandler):
@@ -117,6 +158,7 @@ def has_package(data, package_type):
 
 class WheelHandler(PypiHandler):
     shield_subject = 'wheel'
+    cacheable = True
 
     def handle_package_data(self, data):
         has_wheel = has_package(data, 'bdist_wheel')
@@ -127,6 +169,7 @@ class WheelHandler(PypiHandler):
 
 class EggHandler(PypiHandler):
     shield_subject = 'egg'
+    cacheable = True
 
     def handle_package_data(self, data):
         has_egg = has_package(data, 'bdist_egg')
@@ -137,6 +180,7 @@ class EggHandler(PypiHandler):
 
 class FormatHandler(PypiHandler):
     shield_subject = 'format'
+    cacheable = True
 
     def handle_package_data(self, data):
         has_egg = has_package(data, 'bdist_egg')
@@ -152,6 +196,7 @@ class FormatHandler(PypiHandler):
 
 class LicenseHandler(PypiHandler):
     shield_subject = 'license'
+    cacheable = True
 
     def get_license(self, data):
         '''Get the package license.'''
@@ -175,6 +220,7 @@ class LicenseHandler(PypiHandler):
 
 class PythonVersionsHandler(PypiHandler):
     shield_subject = 'python'
+    cacheable = True
 
     def get_versions(self, data):
         """"
@@ -202,6 +248,7 @@ class PythonVersionsHandler(PypiHandler):
 
 class ImplementationHandler(PypiHandler):
     shield_subject = 'implementation'
+    cacheable = True
 
     def get_implementations(self, data):
         """"
@@ -235,6 +282,7 @@ class ImplementationHandler(PypiHandler):
 
 class StatusHandler(PypiHandler):
     shield_subject = 'status'
+    cacheable = True
 
     def get_implementations(self, data):
         """"
@@ -284,6 +332,8 @@ def shield(request, generator, package, extension):
 
 
 if __name__ == '__main__':
+    if not os.path.exists(FILE_CACHE):
+        os.mkdir(FILE_CACHE)
     if '.svg' not in mimetypes.types_map:
         mimetypes.add_type("image/svg+xml", ".svg")
     app.run("localhost", 8888)
