@@ -20,7 +20,7 @@ PYPI_URL = "https://pypi.python.org/pypi/%s/json"
 SHIELD_URL = "http://img.shields.io/badge/%s-%s-%s.%s"
 # SHIELD_URL = "http://localhost:9000/badge/%s-%s-%s.%s"  # pypip.in uses a local version of img.shields.io
 FILE_CACHE = "/tmp/shields.py/"
-CACHE_TIME = (60 * 60) * 2  # 2 hours
+CACHE_TIME = (60 * 60) * 24  # 24 hours
 REDIS_EXPIRE = 60 * 10  # 10 minutes
 
 app = Klein()
