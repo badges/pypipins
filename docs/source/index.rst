@@ -75,7 +75,28 @@ the style value to 'flat' will use the flat style as seen below.
 
     ?style=flat
 
-.. image:: https://pypip.in/py_versions/blackhole/badge.svg?style=flat
+Original vs flat comparison
+---------------------------
+
++----------------------------------------------------------------+---------------------------------------------------------------------------+
+| Original                                                       | Flat                                                                      |
++================================================================+===========================================================================+
+| .. image:: https://pypip.in/download/blackhole/badge.svg       | .. image:: https://pypip.in/download/blackhole/badge.svg?style=flat       |
++----------------------------------------------------------------+---------------------------------------------------------------------------+
+| .. image:: https://pypip.in/version/blackhole/badge.svg        | .. image:: https://pypip.in/version/blackhole/badge.svg?style=flat        |
++----------------------------------------------------------------+---------------------------------------------------------------------------+
+| .. image:: https://pypip.in/py_versions/blackhole/badge.svg    | .. image:: https://pypip.in/py_versions/blackhole/badge.svg ?style=flat   |
++----------------------------------------------------------------+---------------------------------------------------------------------------+
+| .. image:: https://pypip.in/implementation/blackhole/badge.svg | .. image:: https://pypip.in/implementation/blackhole/badge.svg?style=flat |
++----------------------------------------------------------------+---------------------------------------------------------------------------+
+| .. image:: https://pypip.in/wheel/blackhole/badge.svg          | .. image:: https://pypip.in/wheel/blackhole/badge.svg?style=flat          |
++----------------------------------------------------------------+---------------------------------------------------------------------------+
+| .. image:: https://pypip.in/egg/blackhole/badge.svg            | .. image:: https://pypip.in/egg/blackhole/badge.svg?style=flat            |
++----------------------------------------------------------------+---------------------------------------------------------------------------+
+| .. image:: https://pypip.in/format/blackhole/badge.svg         | .. image:: https://pypip.in/format/blackhole/badge.svg?style=flat         |
++----------------------------------------------------------------+---------------------------------------------------------------------------+
+| .. image:: https://pypip.in/license/blackhole/badge.svg        | .. image:: https://pypip.in/license/blackhole/badge.svg?style=flat        |
++----------------------------------------------------------------+---------------------------------------------------------------------------+
 
 Using other image formats
 =========================
