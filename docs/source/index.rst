@@ -126,6 +126,7 @@ Thanks
 
 PyPI Pin uses;
 
+ - `Redis <http://redis.io/>`_ and it's author `Salvatore/@antirez <https://twitter.com/antirez>`_
  - `Varnish <https://www.varnish-cache.org/>`_
  - haproxy (`Kura's package with SSL and SPDY <https://kura.io/>`_)
  - `Twisted <https://twistedmatrix.com/>`_
