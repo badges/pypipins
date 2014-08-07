@@ -18,23 +18,23 @@ This shield displays the development status of your package. It uses the
 
 The following colours are used for each classifier.
 
-+--------------------------------------+--------+
-| Classifier                           | Colour |
-+======================================+========+
-| Planning, Pre-Alpha, Alpha, Inactive | Red    |
-+--------------------------------------+--------+
-| Beta                                 | Yellow |
-+--------------------------------------+--------+
-| Production/Stable, Mature            | Green  |
-+--------------------------------------+--------+
-
-.. image:: https://img.shields.io/badge/status-planning-red.svg?style=flat
-.. image:: https://img.shields.io/badge/status-pre--alpha-red.svg?style=flat
-.. image:: https://img.shields.io/badge/status-alpha-red.svg?style=flat
-.. image:: https://img.shields.io/badge/status-inactive-red.svg?style=flat
-.. image:: https://img.shields.io/badge/status-beta-yellow.svg?style=flat
-.. image:: https://img.shields.io/badge/status-stable-green.svg?style=flat
-.. image:: https://img.shields.io/badge/status-mature-green.svg?style=flat
++------------+---------------------------------------------+
+| Classifier | Example                                     |
++============+=============================================+
+| Planning   |.. image:: /images/status-planning-red.svg   |
++------------+---------------------------------------------+
+| Pre-Alpha  |.. image:: /images/status-pre--alpha-red.svg |
++------------+---------------------------------------------+
+| Alpha      |.. image:: /images/status-alpha-red.svg      |
++------------+---------------------------------------------+
+| Inactive   |.. image:: /images/status-inactive-red.svg   |
++------------+---------------------------------------------+
+| Beta       |.. image:: /images/status-beta-yellow.svg    |
++------------+---------------------------------------------+
+| Stable     |.. image:: /images/status-stable-green.svg   |
++------------+---------------------------------------------+
+| Mature     |.. image:: /images/status-mature-green.svg   |
++------------+---------------------------------------------+
 
 Image URL
 ~~~~~~~~~
