@@ -8,6 +8,19 @@ This shield displays the latest version release of your package.
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Latest Version
 
+Query string parameters
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can modify the shield using the query string.
+
++---------------+--------------------------------+---------------------------------------------------------------------------------+
+| Parameter     |                                | Example                                                                         |
++===============+================================+=================================================================================+
+| ?text=pypi    | Show the word "pypi" [default] | .. image:: https://pypip.in/version/blackhole/badge.svg?style=flat              |
++---------------+--------------------------------+---------------------------------------------------------------------------------+
+| ?text=version | Show the word "version"        | .. image:: https://pypip.in/version/blackhole/badge.svg?style=flat&text=version |
++---------------+--------------------------------+---------------------------------------------------------------------------------+
+
 Image URL
 ~~~~~~~~~
 ::

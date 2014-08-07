@@ -140,9 +140,12 @@ class DownloadHandler(PypiHandler):
 
 
 class VersionHandler(PypiHandler):
-    shield_subject = 'version'
+    shield_subject = 'pypi'
 
     def handle_package_data(self, data):
+        text = self.request.args.get('text', 'pypi')
+        if text[0] in ('pypi', 'version'):
+            self.shield_subject = text[0]
         return self.write_shield(data['info']['version'].replace('-', '--'))
 
 
