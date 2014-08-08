@@ -14,6 +14,7 @@ import time
 from klein import Klein
 from redis import Redis
 import requests
+from yarg.package import json2package
 
 
 PYPI_URL = "https://pypi.python.org/pypi/%s/json"
@@ -53,21 +54,21 @@ class PypiHandler(object):
         url = PYPI_URL % package
         r_data = redis.get(package)
         if r_data:
-            data = json.loads(r_data)
-            return self.handle_package_data(data)
+            self.package = json2package(r_data)
+            return self.handle_package_data()
         try:
             response = requests.get(url)
             response.raise_for_status()
-        except requests.exceptions.HTTPError:
+        except requests.exceptions.HTTPError as e:
             self.shield_subject = 'error'
             return self.write_shield('error', 'red')
         else:
             redis.set(package, response.content)
             redis.expire(package, REDIS_EXPIRE)
-            data = json.loads(response.content)
-            return self.handle_package_data(data)
+            self.package = json2package(response.content)
+            return self.handle_package_data()
 
-    def handle_package_data(self, json_data):
+    def handle_package_data(self):
         '''Look at the pypi data and decide what text goes on the badge.'''
         raise NotImplementedError
 
@@ -126,15 +127,14 @@ class DownloadHandler(PypiHandler):
                 new_value = value / float(large_number)
                 return converters(new_value)
 
-    def handle_package_data(self, data):
+    def handle_package_data(self):
         period = self.request.args.get('period', 'month')
         if isinstance(period, list):
             period = period[0]
         if period not in ('day', 'week', 'month'):
             period = 'month'
-        downloads = data['info']['downloads']['last_{0}'.format(period)]
+        downloads = getattr(self.package.downloads, period)
         downloads = self.intword(downloads)
-        period = "%s" % period if period in ('week', 'month') else "today"
         pperiod = "%s/%s" % (downloads, period)
         return self.write_shield(pperiod)
 
@@ -142,20 +142,18 @@ class DownloadHandler(PypiHandler):
 class VersionHandler(PypiHandler):
     shield_subject = 'pypi'
 
-    def handle_package_data(self, data):
+    def handle_package_data(self):
         text = self.request.args.get('text', 'pypi')
         if text[0] in ('pypi', 'version'):
             self.shield_subject = text[0]
-        return self.write_shield(data['info']['version'].replace('-', '--'))
+        return self.write_shield(self.package.latest_release_id.replace('-', '--'))
 
 
-def has_package(data, package_type):
+def has_package(package, package_type):
     '''Does the package have a download of the right type?'''
-    urls = data['urls']
-    if len(urls) > 0:
-        for u in urls:
-            if u['packagetype'] == package_type:
-                return True
+    for p in package.latest_release:
+        if p.package_type == package_type:
+            return True
     return False
 
 
@@ -163,8 +161,8 @@ class WheelHandler(PypiHandler):
     shield_subject = 'wheel'
     cacheable = True
 
-    def handle_package_data(self, data):
-        has_wheel = has_package(data, 'bdist_wheel')
+    def handle_package_data(self):
+        has_wheel = has_package(self.package, 'wheel')
         wheel_text = "yes" if has_wheel else "no"
         colour = "brightgreen" if has_wheel else "red"
         return self.write_shield(wheel_text, colour)
@@ -174,8 +172,8 @@ class EggHandler(PypiHandler):
     shield_subject = 'egg'
     cacheable = True
 
-    def handle_package_data(self, data):
-        has_egg = has_package(data, 'bdist_egg')
+    def handle_package_data(self,):
+        has_egg = has_package(self.package, 'egg')
         egg_text = "yes" if has_egg else "no"
         colour = "red" if has_egg else "brightgreen"
         return self.write_shield(egg_text, colour)
@@ -185,13 +183,13 @@ class FormatHandler(PypiHandler):
     shield_subject = 'format'
     cacheable = True
 
-    def handle_package_data(self, data):
-        has_egg = has_package(data, 'bdist_egg')
+    def handle_package_data(self):
+        has_egg = has_package(self.package, 'egg')
         colour = "yellow"
         text = "source"
         text = "egg" if has_egg else text
         colour = "red" if has_egg else colour
-        has_wheel = has_package(data, 'bdist_wheel')
+        has_wheel = has_package(self.package, 'wheel')
         text = "wheel" if has_wheel else text
         colour = "brightgreen" if has_wheel else colour
         return self.write_shield(text, colour)
@@ -201,21 +199,17 @@ class LicenseHandler(PypiHandler):
     shield_subject = 'license'
     cacheable = True
 
-    def get_license(self, data):
+    def get_license(self):
         '''Get the package license.'''
-        info = data['info']
-        license = info.get('license')
-        # Use the license unless someone blobbed the whole license text in
-        # this field. In this case fallback on classifers.
-        if license and '\n' not in license and license.upper() != 'UNKNOWN':
-            return license
-        for classifier in info['classifiers']:
-            if classifier.startswith("License"):
-                return classifier.split(" :: ")[-1]
+        if self.package.license and '\n' not in self.package.license and \
+        self.package.license.upper() != 'UNKNOWN':
+            return self.package.license
+        if self.package.license_from_classifiers:
+            return self.package.license_from_classifiers
         return "unknown"
 
-    def handle_package_data(self, data):
-        license = self.get_license(data)
+    def handle_package_data(self):
+        license = self.get_license()
         license = license.replace(' ', '_')
         colour = "blue" if license != "unknown" else "red"
         return self.write_shield(license, colour)
@@ -225,16 +219,16 @@ class PythonVersionsHandler(PypiHandler):
     shield_subject = 'python'
     cacheable = True
 
-    def get_versions(self, data):
+    def get_versions(self):
         """"
         Get supported Python versions
         """
-        classifiers = data['info']['classifiers']
-        if not isinstance(classifiers, list):
+        if not isinstance(self.package.classifiers, list) and \
+        not len(self.package.classifiers) > 0:
             return "none found"
         cs = []
         version_re = re.compile(r"Programming Language \:\: Python \:\: \d\.\d")
-        for classifier in classifiers:
+        for classifier in self.package.classifiers:
             if version_re.match(classifier):
                 cs.append(classifier[-3:])
         if not len(cs) > 0:
@@ -242,8 +236,8 @@ class PythonVersionsHandler(PypiHandler):
             return "2.7"
         return cs
 
-    def handle_package_data(self, data):
-        versions = self.get_versions(data)
+    def handle_package_data(self):
+        versions = self.get_versions()
         if not isinstance(versions, list):
             return self.write_shield(versions, 'blue')
         return self.write_shield(", ".join(versions), 'blue')
@@ -253,31 +247,31 @@ class ImplementationHandler(PypiHandler):
     shield_subject = 'implementation'
     cacheable = True
 
-    def get_implementations(self, data):
+    def get_implementations(self):
         """"
         Get supported Python implementations
         """
-        classifiers = data['info']['classifiers']
-        if not isinstance(classifiers, list):
+        if not isinstance(self.package.classifiers, list) and \
+        not len(self.package.classifiers) > 0:
             return "none found"
         cs = []
-        if "Programming Language :: Python :: Implementation :: CPython" in classifiers:
+        if "Programming Language :: Python :: Implementation :: CPython" in self.package.classifiers:
             cs.append('cpython')
-        if "Programming Language :: Python :: Implementation :: IronPython" in classifiers:
+        if "Programming Language :: Python :: Implementation :: IronPython" in self.package.classifiers:
             cs.append('iron')
-        if "Programming Language :: Python :: Implementation :: Jython" in classifiers:
+        if "Programming Language :: Python :: Implementation :: Jython" in self.package.classifiers:
             cs.append('jython')
-        if "Programming Language :: Python :: Implementation :: PyPy" in classifiers:
+        if "Programming Language :: Python :: Implementation :: PyPy" in self.package.classifiers:
             cs.append('pypy')
-        if "Programming Language :: Python :: Implementation :: Stackless" in classifiers:
+        if "Programming Language :: Python :: Implementation :: Stackless" in self.package.classifiers:
             cs.append('stackless')
         if not len(cs) > 0:
             # assume CPython
             return 'cpython'
         return cs
 
-    def handle_package_data(self, data):
-        versions = self.get_implementations(data)
+    def handle_package_data(self):
+        versions = self.get_implementations()
         if not isinstance(versions, list):
             return self.write_shield(versions, 'blue')
         return self.write_shield(", ".join(versions), 'blue')
@@ -287,23 +281,23 @@ class StatusHandler(PypiHandler):
     shield_subject = 'status'
     cacheable = True
 
-    def get_implementations(self, data):
+    def get_implementations(self):
         """"
         Get supported Python implementations
         """
-        classifiers = data['info']['classifiers']
-        if not isinstance(classifiers, list):
+        if not isinstance(self.package.classifiers, list) and \
+        not len(self.package.classifiers) > 0:
             return "none found"
-        for classifier in classifiers:
+        for classifier in self.package.classifiers:
             if classifier.startswith("Development Status"):
                 bits = classifier.split(' :: ')
                 return bits[1].split(' - ')
         return "1", "unknown"
 
-    def handle_package_data(self, data):
+    def handle_package_data(self):
         statuses = {'1': 'red', '2': 'red', '3': 'red', '4': 'yellow',
                     '5': 'brightgreen', '6': 'brightgreen', '7': 'red'}
-        code, status = self.get_implementations(data)
+        code, status = self.get_implementations()
         status = status.lower().replace('-', '--')
         status = "stable" if status == "production/stable" else status
         return self.write_shield(status, statuses[code])
