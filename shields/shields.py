@@ -240,6 +240,7 @@ class ImplementationHandler(PypiHandler):
         Get supported Python implementations
         """
         cs = self.package.python_implementations
+        cs = [c.lower() for c in cs]
         if not len(cs) > 0:
             # assume CPython
             return 'cpython'
