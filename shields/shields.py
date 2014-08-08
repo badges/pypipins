@@ -149,20 +149,12 @@ class VersionHandler(PypiHandler):
         return self.write_shield(self.package.latest_release_id.replace('-', '--'))
 
 
-def has_package(package, package_type):
-    '''Does the package have a download of the right type?'''
-    for p in package.latest_release:
-        if p.package_type == package_type:
-            return True
-    return False
-
-
 class WheelHandler(PypiHandler):
     shield_subject = 'wheel'
     cacheable = True
 
     def handle_package_data(self):
-        has_wheel = has_package(self.package, 'wheel')
+        has_wheel = self.package.has_wheel
         wheel_text = "yes" if has_wheel else "no"
         colour = "brightgreen" if has_wheel else "red"
         return self.write_shield(wheel_text, colour)
@@ -173,7 +165,7 @@ class EggHandler(PypiHandler):
     cacheable = True
 
     def handle_package_data(self,):
-        has_egg = has_package(self.package, 'egg')
+        has_egg = self.package.has_egg
         egg_text = "yes" if has_egg else "no"
         colour = "red" if has_egg else "brightgreen"
         return self.write_shield(egg_text, colour)
@@ -184,12 +176,12 @@ class FormatHandler(PypiHandler):
     cacheable = True
 
     def handle_package_data(self):
-        has_egg = has_package(self.package, 'egg')
+        has_egg = self.package.has_egg
         colour = "yellow"
         text = "source"
         text = "egg" if has_egg else text
         colour = "red" if has_egg else colour
-        has_wheel = has_package(self.package, 'wheel')
+        has_wheel = self.package.has_wheel
         text = "wheel" if has_wheel else text
         colour = "brightgreen" if has_wheel else colour
         return self.write_shield(text, colour)
@@ -226,11 +218,7 @@ class PythonVersionsHandler(PypiHandler):
         if not isinstance(self.package.classifiers, list) and \
         not len(self.package.classifiers) > 0:
             return "none found"
-        cs = []
-        version_re = re.compile(r"Programming Language \:\: Python \:\: \d\.\d")
-        for classifier in self.package.classifiers:
-            if version_re.match(classifier):
-                cs.append(classifier[-3:])
+        cs = self.package.python_versions
         if not len(cs) > 0:
             # assume 2.7
             return "2.7"
@@ -251,20 +239,7 @@ class ImplementationHandler(PypiHandler):
         """"
         Get supported Python implementations
         """
-        if not isinstance(self.package.classifiers, list) and \
-        not len(self.package.classifiers) > 0:
-            return "none found"
-        cs = []
-        if "Programming Language :: Python :: Implementation :: CPython" in self.package.classifiers:
-            cs.append('cpython')
-        if "Programming Language :: Python :: Implementation :: IronPython" in self.package.classifiers:
-            cs.append('iron')
-        if "Programming Language :: Python :: Implementation :: Jython" in self.package.classifiers:
-            cs.append('jython')
-        if "Programming Language :: Python :: Implementation :: PyPy" in self.package.classifiers:
-            cs.append('pypy')
-        if "Programming Language :: Python :: Implementation :: Stackless" in self.package.classifiers:
-            cs.append('stackless')
+        cs = self.package.python_implementations
         if not len(cs) > 0:
             # assume CPython
             return 'cpython'
@@ -281,10 +256,7 @@ class StatusHandler(PypiHandler):
     shield_subject = 'status'
     cacheable = True
 
-    def get_implementations(self):
-        """"
-        Get supported Python implementations
-        """
+    def get_status(self):
         if not isinstance(self.package.classifiers, list) and \
         not len(self.package.classifiers) > 0:
             return "none found"
@@ -297,7 +269,7 @@ class StatusHandler(PypiHandler):
     def handle_package_data(self):
         statuses = {'1': 'red', '2': 'red', '3': 'red', '4': 'yellow',
                     '5': 'brightgreen', '6': 'brightgreen', '7': 'red'}
-        code, status = self.get_implementations()
+        code, status = self.get_status()
         status = status.lower().replace('-', '--')
         status = "stable" if status == "production/stable" else status
         return self.write_shield(status, statuses[code])
