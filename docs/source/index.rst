@@ -2,32 +2,21 @@
 PyPI Shields/Pins
 =================
 
-.. image:: https://pypip.in/d/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
+.. image:: https://pypip.in/download/blackhole/badge.svg?style=flat
 
-.. image:: https://pypip.in/v/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
+.. image:: https://pypip.in/version/blackhole/badge.svg?style=flat
 
 .. image:: https://pypip.in/py_versions/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
 
 .. image:: https://pypip.in/implementation/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
 
 .. image:: https://pypip.in/status/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
 
 .. image:: https://pypip.in/egg/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
 
 .. image:: https://pypip.in/wheel/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
-
-.. image:: https://pypip.in/format/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
 
 .. image:: https://pypip.in/license/blackhole/badge.svg?style=flat
-        :target: https://pypi.python.org/pypi/blackhole/
 
 PyPI Shields/Pins are shields for your GitHub repo, documentation or website that show
 how many times your project has been downloaded, its latest version, whether
