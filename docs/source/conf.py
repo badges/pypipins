@@ -11,7 +11,9 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
+import datetime
+import os
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -41,7 +43,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'PyPI Pins'
-copyright = u'2014, Kura'
+copyright = u'{0}, Kura'.format(datetime.datetime.now().year)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -95,6 +97,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 # html_theme = 'nature'
+
 import sphinx_rtd_theme
 
 html_theme = "sphinx_rtd_theme"
