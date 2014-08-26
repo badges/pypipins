@@ -17,6 +17,8 @@ setup(
         'Twisted>=13.2.0',
         'klein>=0.2.3',
         'requests>=2.2.1',
+        'yarg>=0.1.9',
+        'redis>=2.10.3'
     ],
     classifiers=[
         'Programming Language :: Python :: 2',
