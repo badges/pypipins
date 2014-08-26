@@ -1,7 +1,7 @@
 try:
     from StringIO import StringIO as BytesIO
 except ImportError:
-    from BytesIO import BytesIO
+    from io import BytesIO
 
 import gc
 import hashlib
