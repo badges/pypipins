@@ -2,7 +2,9 @@
 Wheel
 =====
 
-This shield displays whether your package has a wheel version available.
+This shield displays whether your package has a wheel_ version available.
+
+.. _wheel: http://pythonwheels.com/
 
 .. image:: https://pypip.in/wheel/blackhole/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/blackhole/
