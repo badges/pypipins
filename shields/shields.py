@@ -203,6 +203,7 @@ class LicenseHandler(PypiHandler):
     def handle_package_data(self):
         license = self.get_license()
         license = license.replace(' ', '_')
+        license = license.replace('-', '--')
         colour = "blue" if license != "unknown" else "red"
         return self.write_shield(license, colour)
 
