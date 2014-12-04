@@ -34,6 +34,14 @@ def format_number(singular, number):
     return value.replace('.0', '')
 
 
+def escape_shield_query(text):
+    """Escape text to be inserted in a shield API request."""
+    text = text.replace('_', '__')
+    text = text.replace(' ', '_')
+    text = text.replace('-', '--')
+    return text
+
+
 intword_converters = (
     (3, lambda number: format_number('%(value).1fk', number)),
     (6, lambda number: format_number('%(value).1fM', number)),
@@ -202,8 +210,7 @@ class LicenseHandler(PypiHandler):
 
     def handle_package_data(self):
         license = self.get_license()
-        license = license.replace(' ', '_')
-        license = license.replace('-', '--')
+        license = escape_shield_query(license)
         colour = "blue" if license != "unknown" else "red"
         return self.write_shield(license, colour)
 
