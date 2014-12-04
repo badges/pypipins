@@ -11,6 +11,11 @@ import os
 import re
 import time
 
+try:
+    from urllib import quote as urllib_quote
+except ImportError:     # python3
+    from urllib.parse import quote as urllib_quote
+
 from klein import Klein
 from redis import Redis
 import requests
@@ -36,6 +41,7 @@ def format_number(singular, number):
 
 def escape_shield_query(text):
     """Escape text to be inserted in a shield API request."""
+    text = urllib_quote(text, safe=' ')
     text = text.replace('_', '__')
     text = text.replace(' ', '_')
     text = text.replace('-', '--')
