@@ -11,6 +11,11 @@ import os
 import re
 import time
 
+try:
+    from urllib import quote as urllib_quote
+except ImportError:     # python3
+    from urllib.parse import quote as urllib_quote
+
 from klein import Klein
 from redis import Redis
 import requests
@@ -32,6 +37,15 @@ def format_number(singular, number):
     value = singular % {'value': number}
     # Get rid of the .0 but keep the other decimals
     return value.replace('.0', '')
+
+
+def escape_shield_query(text):
+    """Escape text to be inserted in a shield API request."""
+    text = urllib_quote(text, safe=' ')
+    text = text.replace('_', '__')
+    text = text.replace(' ', '_')
+    text = text.replace('-', '--')
+    return text
 
 
 intword_converters = (
@@ -202,7 +216,7 @@ class LicenseHandler(PypiHandler):
 
     def handle_package_data(self):
         license = self.get_license()
-        license = license.replace(' ', '_')
+        license = escape_shield_query(license)
         colour = "blue" if license != "unknown" else "red"
         return self.write_shield(license, colour)
 
