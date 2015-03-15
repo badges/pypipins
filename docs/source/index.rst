@@ -46,38 +46,27 @@ Shields & Usage
 Shield Styling
 ==============
 
-You can change the style of the shield from the rounded corners to a cleaner,
-flat style by setting a style value in the REQUEST_URI.
-
-If no style is provided, the default rounded corner style will be used, setting
-the style value to 'flat' will use the flat style as seen below.
+You can change the styling of the shields to use be flat with rounded corners (default),
+flat with squared corners or the old plastic style
 
 .. code::
 
     ?style=flat
 
-Original vs flat comparison
----------------------------
+.. image:: https://pypip.in/download/blackhole/badge.svg?style=flat
 
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
-| Original                                                       | Flat                                                                      |
-+================================================================+===========================================================================+
-| .. image:: https://pypip.in/download/blackhole/badge.svg       | .. image:: https://pypip.in/download/blackhole/badge.svg?style=flat       |
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
-| .. image:: https://pypip.in/version/blackhole/badge.svg        | .. image:: https://pypip.in/version/blackhole/badge.svg?style=flat        |
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
-| .. image:: https://pypip.in/py_versions/blackhole/badge.svg    | .. image:: https://pypip.in/py_versions/blackhole/badge.svg ?style=flat   |
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
-| .. image:: https://pypip.in/implementation/blackhole/badge.svg | .. image:: https://pypip.in/implementation/blackhole/badge.svg?style=flat |
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
-| .. image:: https://pypip.in/wheel/blackhole/badge.svg          | .. image:: https://pypip.in/wheel/blackhole/badge.svg?style=flat          |
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
-| .. image:: https://pypip.in/egg/blackhole/badge.svg            | .. image:: https://pypip.in/egg/blackhole/badge.svg?style=flat            |
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
-| .. image:: https://pypip.in/format/blackhole/badge.svg         | .. image:: https://pypip.in/format/blackhole/badge.svg?style=flat         |
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
-| .. image:: https://pypip.in/license/blackhole/badge.svg        | .. image:: https://pypip.in/license/blackhole/badge.svg?style=flat        |
-+----------------------------------------------------------------+---------------------------------------------------------------------------+
+.. code::
+
+    ?style=flat-square
+
+.. image:: https://pypip.in/download/blackhole/badge.svg?style=flat-square
+
+.. code::
+
+    ?style=plastic
+
+.. image:: https://pypip.in/download/blackhole/badge.svg?style=plastic
+
 
 Using other image formats
 =========================
