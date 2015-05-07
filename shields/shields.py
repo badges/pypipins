@@ -235,6 +235,7 @@ class PythonVersionsHandler(PypiHandler):
         not len(self.package.classifiers) > 0:
             return "none found"
         cs = self.package.python_versions
+        cs = sorted(set(cs))
         if not len(cs) > 0:
             # assume 2.7
             return "2.7"
