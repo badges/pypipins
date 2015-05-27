@@ -8,7 +8,7 @@ This shield displays which implementations of Python your project supports.
     :target: https://pypi.python.org/pypi/blackhole/
     :alt: Supported Python implementations
 
-If no implemenation classifiers are found, we assume CPython.
+If no implementation classifiers are found, we assume CPython.
 
 Image URL
 ~~~~~~~~~
