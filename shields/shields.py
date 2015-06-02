@@ -31,6 +31,7 @@ REDIS_EXPIRE = 60 * 10  # 10 minutes
 
 app = Klein()
 redis = Redis()
+resource = app.resource
 
 
 def format_number(singular, number):
