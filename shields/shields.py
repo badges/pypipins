@@ -113,8 +113,6 @@ class PypiHandler(object):
         shield_response = requests.get(shield_url, stream=True)
         img = BytesIO()
         for chunk in shield_response.iter_content(1024):
-            if not chunk:
-                break
             img.write(chunk)
         if self.cacheable:
             with open(cache, 'w') as ifile:
